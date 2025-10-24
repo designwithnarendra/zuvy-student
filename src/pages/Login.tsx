@@ -30,24 +30,24 @@ const Login = () => {
   const secondRowCards = socialProofData.slice(5, 8);
 
   const StudentCard = ({ name, role, avatar }: { name: string; role: string; avatar: string }) => (
-    <div className="bg-secondary-light p-3 rounded-lg flex items-center gap-3 min-w-fit">
+    <div className="bg-secondary-light dark:bg-secondary-light p-3 rounded-lg flex items-center gap-3 min-w-fit">
       <Avatar className="h-12 w-12">
         <AvatarImage src="" />
-        <AvatarFallback className="text-secondary-dark bg-secondary text-sm font-medium">
+        <AvatarFallback className="text-primary bg-secondary text-sm font-medium">
           {avatar}
         </AvatarFallback>
       </Avatar>
       <div className="text-left">
-        <div className="text-secondary-dark font-bold text-sm">{name}</div>
-        <div className="text-secondary-dark text-sm">{role}</div>
+        <div className="text-foreground font-bold text-sm">{name}</div>
+        <div className="text-foreground text-sm">{role}</div>
       </div>
     </div>
   );
 
   const MetricCard = ({ number, description }: { number: string; description: string }) => (
-    <div className="bg-accent-light p-3 rounded-lg text-center min-w-fit">
-      <div className="text-accent-dark font-bold text-lg">{number}</div>
-      <div className="text-accent-dark text-sm">{description}</div>
+    <div className="bg-accent-light dark:bg-accent-light p-3 rounded-lg text-center min-w-fit">
+      <div className="text-foreground font-bold text-lg">{number}</div>
+      <div className="text-foreground text-sm">{description}</div>
     </div>
   );
 
@@ -59,8 +59,8 @@ const Login = () => {
         <div className="mb-6">
           <img
             src={theme === 'dark'
-              ? "/images/zuvy-logo-horizontal-dark.png"
-              : "/images/zuvy-logo-horizontal.png"
+              ? "/zuvy-logo-horizontal-dark.png"
+              : "/zuvy-logo-horizontal.png"
             }
             alt="Zuvy Logo"
             className="h-14 mx-auto"

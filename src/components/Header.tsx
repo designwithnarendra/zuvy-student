@@ -51,8 +51,8 @@ const Header = () => {
         <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
           <img
             src={theme === 'dark'
-              ? "/images/zuvy-logo-horizontal-dark.png"
-              : "/images/zuvy-logo-horizontal.png"
+              ? "/zuvy-logo-horizontal-dark.png"
+              : "/zuvy-logo-horizontal.png"
             }
             alt="Zuvy"
             className="h-10"
