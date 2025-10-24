@@ -67,7 +67,7 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
       switch (type) {
         case 'live-class':
         case 'video':
-          return status === 'completed' ? 'text-success' : 'text-primary';
+          return status === 'completed' ? 'text-success' : 'text-primary dark:text-secondary';
         case 'article':
         case 'assessment':
           return status === 'completed' ? 'text-success' : 'text-accent';
@@ -198,7 +198,7 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
                                item.type === 'coding-problem' ? `Coding Problem: ${item.title}` :
                                item.title}
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-muted-foreground dark:text-foreground">
                               {getItemDetails(adjustedItem)}
                             </div>
                           </div>

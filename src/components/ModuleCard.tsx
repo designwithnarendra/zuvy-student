@@ -34,21 +34,21 @@ const ModuleCard = ({
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
           <div className="flex-1">
             {isLocked && (
-              <Badge className="mb-2 bg-muted-light text-muted-foreground border-muted-foreground/20">
+              <Badge className="mb-2 bg-muted-light text-muted-foreground dark:bg-muted dark:text-foreground border-muted-foreground/20">
                 <Lock className="w-3 h-3 mr-1" />
                 Locked
               </Badge>
             )}
             {!isLocked && isCurrentModule && (
-              <Badge className="mb-2 bg-primary-light text-primary border-primary/20 pointer-events-none">Current Module</Badge>
+              <Badge className="mb-2 bg-primary-light text-primary dark:bg-primary dark:text-white border-primary/20 pointer-events-none">Current Module</Badge>
             )}
             {!isLocked && isCompleted && (
-              <Badge className="mb-2 bg-success-light text-success border-success/20 pointer-events-none">Completed</Badge>
+              <Badge className="mb-2 bg-success-light text-success dark:bg-success dark:text-white border-success/20 pointer-events-none">Completed</Badge>
             )}
             <h3 className="text-xl font-heading font-semibold mb-2">
               Module {module.id}: {module.name}
             </h3>
-            <p className="text-muted-foreground mb-3 text-sm">
+            <p className="text-foreground mb-3 text-sm">
               {getModuleDescription(module.id)}
             </p>
             {isLocked && module.lockReason && (
@@ -77,7 +77,7 @@ const ModuleCard = ({
                 </Link>
               </Button>
             ) : (
-              <Button variant="link" className="px-6 text-primary" asChild>
+              <Button variant="link" className="px-6 text-primary dark:text-secondary" asChild>
                 <Link to={`/course/${courseId}/module/${module.id}`}>
                   {getModuleCTA(module.id, moduleProgress)}
                 </Link>
@@ -122,7 +122,7 @@ const ModuleCard = ({
               </Link>
             </Button>
           ) : (
-            <Button variant="link" className="w-full text-primary" asChild>
+            <Button variant="link" className="w-full text-primary dark:text-secondary" asChild>
               <Link to={`/course/${courseId}/module/${module.id}`}>
                 {getModuleCTA(module.id, moduleProgress)}
               </Link>

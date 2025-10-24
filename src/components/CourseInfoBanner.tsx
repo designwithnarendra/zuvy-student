@@ -38,12 +38,12 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
-                <p className="text-base md:text-lg text-muted-foreground mb-4">{displayDescription}</p>
+                <p className="text-base md:text-lg text-foreground mb-4">{displayDescription}</p>
                 {needsViewMore && (
                   <Button
                     variant="link"
                     onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="p-0 h-auto text-primary mb-4"
+                    className="p-0 h-auto text-primary dark:text-secondary mb-4"
                   >
                     {showFullDescription ? 'View Less' : 'View More'}
                   </Button>
@@ -53,7 +53,7 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
+                <p className="text-sm text-muted-foreground">In Collaboration With</p>
                 <img
                   src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
                   alt="AFE Brand"
@@ -72,12 +72,12 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
             className="w-full h-40 rounded-lg object-cover mb-4"
           />
           <h1 className="text-2xl font-heading font-bold mb-2">{course.name}</h1>
-          <p className="text-base text-muted-foreground mb-4">{displayDescription}</p>
+          <p className="text-base text-foreground mb-4">{displayDescription}</p>
           {needsViewMore && (
             <Button
               variant="link"
               onClick={() => setShowFullDescription(!showFullDescription)}
-              className="p-0 h-auto text-primary mb-4"
+              className="p-0 h-auto text-primary dark:text-secondary mb-4"
             >
               {showFullDescription ? 'View Less' : 'View More'}
             </Button>
@@ -86,7 +86,7 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
             <span className="font-medium">Instructor: {course.instructor.name}</span>
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
+            <p className="text-sm text-muted-foreground">In Collaboration With</p>
             <img
               src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
               alt="AFE Brand"

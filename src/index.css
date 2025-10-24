@@ -8,197 +8,197 @@
 @layer base {
   :root {
     /* Base Colors - The foundation of your interface */
-    --background: 0 0% 100%;           /* Pure white background for maximum readability */
-    --foreground: 222.2 84% 4.9%;     /* Deep charcoal for primary text - ensures excellent contrast */
-    
-    /* Card and Surface Colors - Creates depth and hierarchy, aligned with refined primary blue hue */
-    --card: 224 30% 97%;              /* Subtle blue-tinted off-white that harmonizes with refined primary blue */
-    --card-light: 224 25% 98.5%;      /* Even more subtle card variant for minimal elevation */
-    --card-elevated: 224 40% 95.5%;   /* Slightly more pronounced card for important content */
-    --card-foreground: 222.2 84% 4.9%; /* Consistent text color across all surfaces */
-    
-    /* Popover and Modal Colors - Maintains visual consistency */
-    --popover: 0 0% 100%;             /* White background for dropdowns and overlays */
-    --popover-foreground: 222.2 84% 4.9%; /* Same readable text color */
-    
-    /* Primary Brand Colors - Refined, focused blue that reduces visual fatigue */
-    --primary: 224 71% 56%;           /* #4f6dcf - Refined blue that is confident and stable */
-    --primary-light: 224 71% 95%;     /* Much lighter blue for subtle backgrounds */
-    --primary-dark: 224 71% 36%;      /* Darker blue for emphasis and active states */
-    --primary-foreground: 210 20% 98%; /* Light text on primary backgrounds for accessibility */
-    
-    /* Secondary Brand Colors - Warm orange-coral recalibrated to complement new primary */
-    --secondary: 25 85% 55%;          /* #f57b29 - Warm orange-coral for dynamic contrast with refined blue */
-    --secondary-light: 25 85% 95%;    /* Much lighter orange for subtle backgrounds */
-    --secondary-dark: 25 85% 35%;     /* Dark orange for strong emphasis and active states */
-    --secondary-foreground: 210 20% 98%; /* Light text maintains readability on orange backgrounds */
-    
-    /* Muted Colors - Subtle backgrounds and disabled states with variants */
-    --muted: 210 40% 96%;             /* Very light blue-gray for subtle backgrounds */
-    --muted-light: 210 40% 98%;       /* Even lighter muted for the most subtle backgrounds */
-    --muted-dark: 210 40% 90%;        /* Slightly darker muted for better definition */
-    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray for secondary text and descriptions */
-    
-    /* Accent Colors - Energizing cyan tempered to avoid visual distraction */
-    --accent: 198 80% 50%;            /* #19b2d8 - Cyan that maintains alertness without overstimulation */
-    --accent-light: 198 80% 95%;      /* Much lighter cyan for subtle backgrounds */
-    --accent-dark: 198 80% 30%;       /* Dark cyan for strong emphasis and depth */
-    --accent-foreground: 210 20% 98%; /* Light text on accent backgrounds */
-    
-    /* Destructive/Error Colors - Clear feedback without harsh alarm, with variants */
-    --destructive: 0 84.2% 60.2%;     /* #ef4444 - Clear but not aggressive red for errors */
-    --destructive-light: 0 84.2% 95%; /* Much lighter red for subtle backgrounds */
-    --destructive-dark: 0 84.2% 40.2%; /* #dc2626 - Dark red for strong error emphasis */
-    --destructive-foreground: 210 20% 98%; /* Light text on error backgrounds */
-    
-    /* Border and Outline Colors - Subtle definition without distraction */
-    --border: 214.3 31.8% 91.4%;      /* Light blue-gray borders that complement the theme */
-    --input: 214.3 31.8% 91.4%;       /* Same as border for input field consistency */
-    --ring: 224 71% 56%;              /* Refined primary blue for focus rings - maintains brand consistency */
-    
-    /* Radius Values - Modern, friendly corner rounding */
-    --radius: 0.5rem;                 /* 8px radius for a modern, approachable feel */
+    --background: 48 30% 95%;         /* #F5F4ED - Warm off-white background */
+    --foreground: 0 0% 17%;           /* #2B2B2B - Primary text color */
 
-    /* Success Colors - For achievements and positive feedback with variants */
-    --success: 160 84.1% 39.4%;        /* #10b981 - Green that celebrates accomplishment */
-    --success-light: 160 84.1% 95%;    /* Much lighter green for subtle backgrounds */
-    --success-dark: 160 84.1% 19.4%;   /* #065f46 - Dark green for strong success emphasis */
-    --success-foreground: 0 0% 98%;    /* Light text on success backgrounds */
+    /* Card and Surface Colors - Creates depth and hierarchy */
+    --card: 0 0% 100%;                /* #FFFFFF - White surface */
+    --card-light: 0 0% 99%;           /* #FEFEFE - Elevated surface */
+    --card-elevated: 0 0% 100%;       /* #FFFFFF - Surface variant */
+    --card-foreground: 0 0% 17%;      /* #2B2B2B - Consistent text color */
+
+    /* Popover and Modal Colors - Maintains visual consistency */
+    --popover: 0 0% 100%;             /* White background for dropdowns */
+    --popover-foreground: 0 0% 17%;   /* #2B2B2B - Same readable text */
+
+    /* Primary Brand Colors - Forest Green */
+    --primary: 122 36% 27%;           /* #2C5F2D - Forest green base */
+    --primary-light: 122 39% 93%;     /* #E8F5E9 - Light green for subtle backgrounds/hover */
+    --primary-dark: 122 40% 20%;      /* #1D4620 - Darker green for emphasis/active states */
+    --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text on primary */
     
-    /* Warning Colors - For important notices and alerts with variants */
-    --warning: 45.4 93.4% 47.5%;       /* #f59e0b - Amber that draws attention without alarm */
-    --warning-light: 45.4 93.4% 95%;   /* Much lighter amber for subtle backgrounds */
-    --warning-dark: 45.4 93.4% 27.5%;  /* #d97706 - Dark amber for strong warning emphasis */
-    --warning-foreground: 26 83.3% 14.1%; /* Dark text on warning backgrounds */
+    /* Secondary Brand Colors - Bright Teal */
+    --secondary: 152 86% 50%;         /* #12EA7B - Bright teal */
+    --secondary-light: 152 100% 94%;  /* #E0FFF0 - Light teal for subtle backgrounds */
+    --secondary-dark: 152 85% 39%;    /* #0DB862 - Darker teal for emphasis */
+    --secondary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on teal backgrounds */
+
+    /* Muted Colors - Subtle backgrounds and disabled states */
+    --muted: 0 0% 92%;                /* #E8E7DC - Grey light for subtle backgrounds */
+    --muted-light: 0 0% 96%;          /* Lighter muted for minimal backgrounds */
+    --muted-dark: 0 0% 87%;           /* Slightly darker muted for definition */
+    --muted-foreground: 0 0% 54%;     /* #8A8A8A - Grey regular for secondary text */
+
+    /* Accent Colors - Amber Gold */
+    --accent: 38 92% 50%;             /* #F59E0B - Amber gold */
+    --accent-light: 45 93% 89%;       /* #FEF3C7 - Light amber for subtle backgrounds */
+    --accent-dark: 33 92% 44%;        /* #D97706 - Dark amber for emphasis */
+    --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text on accent */
     
-    /* Info Colors - For helpful tips and supplementary information using new accent */
-    --info: 198 80% 50%;               /* Using our refined accent cyan for informational content */
-    --info-light: 198 80% 95%;         /* Much lighter cyan for subtle backgrounds */
-    --info-dark: 198 80% 30%;          /* Dark cyan for strong info emphasis */
-    --info-foreground: 210 20% 98%;    /* Light text on info backgrounds */
+    /* Destructive/Error Colors - Error Red */
+    --destructive: 0 68% 51%;         /* #D32F2F - Error red */
+    --destructive-light: 0 100% 97%;  /* #FFEBEE - Light red for backgrounds */
+    --destructive-dark: 0 68% 37%;    /* #B71C1C - Dark red for emphasis */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF - White text on error */
+
+    /* Border and Outline Colors - Subtle definition */
+    --border: 45 22% 90%;             /* #E8E7DC - Grey light for borders */
+    --input: 45 22% 90%;              /* Same as border for consistency */
+    --ring: 122 36% 27%;              /* Forest green for focus rings */
+
+    /* Radius Values - Modern, friendly corner rounding */
+    --radius: 0.5rem;                 /* 8px radius for modern feel */
+
+    /* Success Colors - Grass Green */
+    --success: 88 48% 50%;            /* #7CB342 - Grass green */
+    --success-light: 88 55% 95%;      /* #F1F8E9 - Light green for backgrounds */
+    --success-dark: 88 60% 35%;       /* #558B2F - Dark green for emphasis */
+    --success-foreground: 0 0% 100%;  /* #FFFFFF - White text on success */
+
+    /* Warning Colors - Warning Gold (same as accent) */
+    --warning: 38 92% 50%;            /* #F59E0B - Amber gold */
+    --warning-light: 45 93% 89%;      /* #FEF3C7 - Light amber for backgrounds */
+    --warning-dark: 33 92% 44%;       /* #D97706 - Dark amber for emphasis */
+    --warning-foreground: 0 0% 10%;   /* #1A1A1A - Dark text on warning */
+
+    /* Info Colors - Info Blue */
+    --info: 207 79% 46%;              /* #1976D2 - Info blue */
+    --info-light: 207 90% 95%;        /* #E3F2FD - Light blue for backgrounds */
+    --info-dark: 207 100% 32%;        /* #0D47A1 - Dark blue for emphasis */
+    --info-foreground: 0 0% 100%;     /* #FFFFFF - White text on info */
     
     /* Learning Progress Colors - For progress bars and completion indicators */
-    --progress-bg: 224 71% 95%;        /* Light primary background for progress containers */
-    --progress-fill: 224 71% 56%;      /* Refined primary blue for progress fill */
-    --progress-label: 215.4 16.3% 46.9%; /* Medium gray text for progress labels */
-    --progress-label-bg: 0 0% 100%;    /* Pure white background for progress labels */
-    
-    /* Interactive States - Hover and active states that enhance the neural theme */
-    --hover-overlay: 224 71% 56% / 0.1;    /* 10% refined primary overlay for hover states */
-    --active-overlay: 224 71% 56% / 0.2;   /* 20% refined primary overlay for active states */
+    --progress-bg: 122 39% 93%;       /* Light green background for progress containers */
+    --progress-fill: 122 36% 27%;     /* Forest green for progress fill */
+    --progress-label: 0 0% 54%;       /* Medium gray text for progress labels */
+    --progress-label-bg: 0 0% 100%;   /* White background for progress labels */
 
-    /* Shadow System - Material Design inspired elevation system with refined Neural Nexus blue tints */
-    --shadow-2dp: 0 1px 3px 0 rgba(79, 109, 207, 0.1), 0 1px 2px 0 rgba(79, 109, 207, 0.06);
-    --shadow-4dp: 0 2px 4px -1px rgba(79, 109, 207, 0.1), 0 1px 2px -1px rgba(79, 109, 207, 0.06);
-    --shadow-8dp: 0 4px 6px -1px rgba(79, 109, 207, 0.1), 0 2px 4px -2px rgba(79, 109, 207, 0.1);
-    --shadow-16dp: 0 10px 15px -3px rgba(79, 109, 207, 0.1), 0 4px 6px -4px rgba(79, 109, 207, 0.1);
-    --shadow-24dp: 0 20px 25px -5px rgba(79, 109, 207, 0.1), 0 8px 10px -6px rgba(79, 109, 207, 0.1);
-    --shadow-32dp: 0 25px 50px -12px rgba(79, 109, 207, 0.25);
-    
+    /* Interactive States - Hover and active states */
+    --hover-overlay: 122 36% 27% / 0.1;    /* 10% forest green overlay for hover */
+    --active-overlay: 122 36% 27% / 0.2;   /* 20% forest green overlay for active */
+
+    /* Shadow System - Material Design inspired elevation system with forest green tints */
+    --shadow-2dp: 0 1px 3px 0 rgba(44, 95, 45, 0.1), 0 1px 2px 0 rgba(44, 95, 45, 0.06);
+    --shadow-4dp: 0 2px 4px -1px rgba(44, 95, 45, 0.1), 0 1px 2px -1px rgba(44, 95, 45, 0.06);
+    --shadow-8dp: 0 4px 6px -1px rgba(44, 95, 45, 0.1), 0 2px 4px -2px rgba(44, 95, 45, 0.1);
+    --shadow-16dp: 0 10px 15px -3px rgba(44, 95, 45, 0.1), 0 4px 6px -4px rgba(44, 95, 45, 0.1);
+    --shadow-24dp: 0 20px 25px -5px rgba(44, 95, 45, 0.1), 0 8px 10px -6px rgba(44, 95, 45, 0.1);
+    --shadow-32dp: 0 25px 50px -12px rgba(44, 95, 45, 0.25);
+
     /* Specialized shadows for different interaction states */
-    --shadow-hover: 0 8px 25px -8px rgba(79, 109, 207, 0.15);
-    --shadow-focus: 0 0 0 2px rgba(79, 109, 207, 0.2);
-    --shadow-pressed: 0 1px 3px 0 rgba(79, 109, 207, 0.2);
-    
+    --shadow-hover: 0 8px 25px -8px rgba(44, 95, 45, 0.15);
+    --shadow-focus: 0 0 0 2px rgba(44, 95, 45, 0.2);
+    --shadow-pressed: 0 1px 3px 0 rgba(44, 95, 45, 0.2);
+
     /* Colored shadows for semantic feedback */
-    --shadow-success: 0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -2px rgba(16, 185, 129, 0.1);
+    --shadow-success: 0 4px 6px -1px rgba(124, 179, 66, 0.1), 0 2px 4px -2px rgba(124, 179, 66, 0.1);
     --shadow-warning: 0 4px 6px -1px rgba(245, 158, 11, 0.1), 0 2px 4px -2px rgba(245, 158, 11, 0.1);
-    --shadow-error: 0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -2px rgba(239, 68, 68, 0.1);
-    --shadow-info: 0 4px 6px -1px rgba(25, 178, 216, 0.1), 0 2px 4px -2px rgba(25, 178, 216, 0.1);
+    --shadow-error: 0 4px 6px -1px rgba(211, 47, 47, 0.1), 0 2px 4px -2px rgba(211, 47, 47, 0.1);
+    --shadow-info: 0 4px 6px -1px rgba(25, 118, 210, 0.1), 0 2px 4px -2px rgba(25, 118, 210, 0.1);
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 224 71% 56%;
+    --sidebar-foreground: 0 0% 17%;
+    --sidebar-primary: 122 36% 27%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 17%;
+    --sidebar-border: 45 22% 90%;
+    --sidebar-ring: 122 36% 27%;
   }
 
-  /* Dark Mode Configuration - Warm, comfortable dark theme */
+  /* Dark Mode Configuration - Forest Green Dark Theme */
   .dark {
-    /* Dark Base Colors - Warm charcoal surfaces with neutral undertones */
-    --background: 210 11% 9%;          /* Warm charcoal background eliminates blue tint */
-    --foreground: 210 20% 92%;         /* Softer off-white text reduces eye strain */
-    
-    /* Dark Card Colors - Enhanced elevation with warm undertones */
-    --card: 210 11% 13%;               /* Warm card background for clear elevation */
-    --card-light: 210 11% 11%;         /* Minimal elevation for subtle content grouping */
-    --card-elevated: 210 11% 15%;      /* More pronounced elevation for important cards */
-    --card-foreground: 210 20% 92%;    /* Consistent soft text color */
-    
+    /* Dark Base Colors - Deep charcoal backgrounds */
+    --background: 0 0% 10%;           /* #1A1A1A - Dark background */
+    --foreground: 48 30% 95%;         /* #F5F4ED - Light text */
+
+    /* Dark Card Colors - Enhanced elevation */
+    --card: 0 0% 15%;                 /* #262626 - Surface */
+    --card-light: 0 0% 10%;           /* #1A1A1A - Minimal elevation */
+    --card-elevated: 0 0% 18%;        /* #2E2E2E - Elevated surface */
+    --card-foreground: 48 30% 95%;    /* #F5F4ED - Light text */
+
     /* Dark Popover Colors */
-    --popover: 210 11% 9%;             /* Consistent with background */
-    --popover-foreground: 210 20% 92%; /* Soft text for readability */
-    
-    /* Dark Primary Colors - Adjusted for warm dark backgrounds */
-    --primary: 224 75% 65%;            /* Refined blue maintains visibility */
-    --primary-light: 224 71% 20%;      /* Subtle primary elements */
-    --primary-dark: 224 71% 48%;       /* Darker primary for contrast */
-    --primary-foreground: 210 20% 92%; /* Soft text maintains accessibility */
-    
-    /* Dark Secondary Colors - Orange adjusted for warm dark mode */
-    --secondary: 25 90% 63%;           /* Bright orange for visibility */
-    --secondary-light: 25 85% 20%;     /* Subtle orange accents */
-    --secondary-dark: 25 85% 47%;      /* Darker orange for emphasis */
-    --secondary-foreground: 210 11% 9%; /* Dark text on bright orange */
-    
-    /* Dark Muted Colors - Improved contrast with warm undertones */
-    --muted: 210 11% 21%;              /* Warm muted background for better contrast */
-    --muted-light: 210 11% 25%;        /* Lighter muted for subtle elevation */
-    --muted-dark: 210 11% 17%;         /* Darker muted for depth */
-    --muted-foreground: 210 20% 72%;   /* Softer secondary text for readability */
-    
-    /* Dark Accent Colors - Cyan maintains energy in warm dark mode */
-    --accent: 198 85% 58%;             /* Bright cyan for visibility */
-    --accent-light: 198 80% 20%;       /* Subtle cyan accents */
-    --accent-dark: 198 80% 42%;        /* Darker cyan for emphasis */
-    --accent-foreground: 210 11% 9%;   /* Dark text on bright accent */
-    
-    /* Dark Destructive Colors - Error feedback with warm undertones */
-    --destructive: 0 62.8% 55%;        /* Slightly brighter red for visibility */
-    --destructive-light: 0 62.8% 20%;  /* Subtle error indicators */
-    --destructive-dark: 0 62.8% 40%;   /* Dark red for emphasis */
-    --destructive-foreground: 210 20% 92%; /* Soft text on error backgrounds */
-    
-    /* Dark Border Colors - Enhanced visibility with warm undertones */
-    --border: 210 11% 26%;             /* Warm borders for clear separation */
-    --input: 210 11% 26%;              /* Input borders match other borders */
-    --ring: 224 75% 65%;               /* Primary blue focus ring */
+    --popover: 0 0% 10%;              /* #1A1A1A - Consistent with background */
+    --popover-foreground: 48 30% 95%; /* #F5F4ED - Light text */
 
-    /* Success Colors - Adjusted for warm dark mode */
-    --success: 160 84.1% 50%;          /* Brighter green for visibility */
-    --success-light: 160 84.1% 20%;    /* Subtle success indicators */
-    --success-dark: 160 84.1% 35%;     /* Darker green for emphasis */
-    --success-foreground: 210 20% 92%; /* Soft text maintains readability */
-    
-    /* Warning Colors - Adjusted for warm dark mode */
-    --warning: 45.4 93.4% 58%;         /* Brighter amber for visibility */
-    --warning-light: 45.4 93.4% 20%;   /* Subtle warning elements */
-    --warning-dark: 45.4 93.4% 42%;    /* Darker amber for emphasis */
-    --warning-foreground: 210 11% 9%;  /* Dark text for contrast */
-    
-    /* Info Colors - Adjusted for warm dark mode */
-    --info: 198 85% 58%;               /* Bright cyan for visibility */
-    --info-light: 198 80% 20%;         /* Subtle info elements */
-    --info-dark: 198 80% 42%;          /* Darker cyan for emphasis */
-    --info-foreground: 210 11% 9%;     /* Dark text on bright info */
-    
-    /* Progress Colors - Enhanced for warm dark mode */
-    --progress-bg: 210 11% 21%;        /* Warm progress container background */
-    --progress-fill: 224 75% 65%;      /* Primary blue progress fill */
-    --progress-label: 210 20% 92%;     /* Soft text for progress labels */
-    --progress-label-bg: 210 11% 15%;  /* Warm background for progress labels */
+    /* Dark Primary Colors - Forest Green Dark */
+    --primary: 122 35% 36%;           /* #3A7A3D - Brighter forest green */
+    --primary-light: 122 36% 27%;     /* #2C5F2D - Subtle green */
+    --primary-dark: 122 35% 45%;      /* #4A9A4D - Bright green for emphasis */
+    --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text */
 
-    --sidebar-background: 210 11% 11%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 224 71% 56%;
-    --sidebar-primary-foreground: 210 20% 92%;
-    --sidebar-accent: 210 11% 17%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 210 11% 26%;
-    --sidebar-ring: 224 75% 65%;
+    /* Dark Secondary Colors - Bright Teal Dark */
+    --secondary: 152 86% 50%;         /* #12EA7B - Same bright teal */
+    --secondary-light: 152 85% 39%;   /* #0DB862 - Subtle teal */
+    --secondary-dark: 152 100% 62%;   /* #1FFFA0 - Brighter teal */
+    --secondary-foreground: 0 0% 10%; /* #1A1A1A - Dark text */
+
+    /* Dark Muted Colors - Improved contrast */
+    --muted: 0 0% 25%;                /* #404040 - Grey light (inverted) */
+    --muted-light: 0 0% 30%;          /* Lighter muted */
+    --muted-dark: 0 0% 20%;           /* Darker muted */
+    --muted-foreground: 0 0% 60%;     /* #999999 - Grey regular with better contrast */
+
+    /* Dark Accent Colors - Amber Gold Dark */
+    --accent: 38 92% 50%;             /* #F59E0B - Same amber */
+    --accent-light: 33 92% 44%;       /* #D97706 - Subtle amber */
+    --accent-dark: 45 98% 60%;        /* #FBBF24 - Brighter amber */
+    --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text */
+
+    /* Dark Destructive Colors - Error Red Dark */
+    --destructive: 0 72% 60%;         /* #EF5350 - Brighter red */
+    --destructive-light: 0 68% 51%;   /* #D32F2F - Subtle red */
+    --destructive-dark: 0 83% 68%;    /* #FF6659 - Bright red */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF - White text */
+
+    /* Dark Border Colors */
+    --border: 0 0% 25%;               /* #404040 - Grey borders */
+    --input: 0 0% 25%;                /* Same as border */
+    --ring: 122 35% 36%;              /* Forest green focus ring */
+
+    /* Success Colors - Grass Green Dark */
+    --success: 88 50% 60%;            /* #8BC34A - Brighter grass green */
+    --success-light: 88 48% 50%;      /* #7CB342 - Subtle green */
+    --success-dark: 88 52% 68%;       /* #9CCC65 - Bright green */
+    --success-foreground: 0 0% 10%;   /* #1A1A1A - Dark text */
+
+    /* Warning Colors - Amber Gold Dark */
+    --warning: 38 92% 50%;            /* #F59E0B - Same as accent */
+    --warning-light: 33 92% 44%;      /* #D97706 - Subtle amber */
+    --warning-dark: 45 98% 60%;       /* #FBBF24 - Brighter amber */
+    --warning-foreground: 0 0% 10%;   /* #1A1A1A - Dark text */
+
+    /* Info Colors - Info Blue Dark */
+    --info: 207 85% 65%;              /* #42A5F5 - Brighter blue */
+    --info-light: 207 79% 46%;        /* #1976D2 - Subtle blue */
+    --info-dark: 207 88% 72%;         /* #64B5F6 - Bright blue */
+    --info-foreground: 0 0% 10%;      /* #1A1A1A - Dark text */
+
+    /* Progress Colors - Enhanced for dark mode */
+    --progress-bg: 0 0% 25%;          /* Dark progress container */
+    --progress-fill: 122 35% 36%;     /* Forest green progress fill */
+    --progress-label: 48 30% 95%;     /* Light text */
+    --progress-label-bg: 0 0% 18%;    /* Dark background */
+
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 48 30% 95%;
+    --sidebar-primary: 122 35% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 48 30% 95%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 122 35% 36%;
   }
 }
 
@@ -229,6 +229,9 @@
   .text-secondary-dark { color: hsl(var(--secondary-dark)); }
   .text-accent-light { color: hsl(var(--accent-light)); }
   .text-accent-dark { color: hsl(var(--accent-dark)); }
+  .text-success-dark { color: hsl(var(--success-dark)); }
+  .text-warning-dark { color: hsl(var(--warning-dark)); }
+  .text-info-dark { color: hsl(var(--info-dark)); }
 
   /* Typography utilities */
   /* Removed text-h6 class as we'll use the existing h6 element styling */
@@ -269,55 +272,61 @@
 
   body {
     @apply bg-background text-foreground font-body;
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.7;
+    font-size: 1rem; /* 16px - Base size */
+    line-height: 1.5;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
-    line-height: 1.7;
+    font-weight: 700;
+    line-height: 1.3;
   }
 
-  h1 { font-size: 6rem; } /* 96px */
-  h2 { font-size: 4.5rem; } /* 72px */
-  h3 { font-size: 3.5rem; } /* 56px */
-  h4 { font-size: 2.625rem; } /* 42px */
-  h5 { font-size: 2rem; } /* 32px */
-  h6 { font-size: 1.5rem; } /* 24px */
+  h1 { font-size: 5.5rem; } /* 88px */
+  h2 { font-size: 4rem; } /* 64px */
+  h3 { font-size: 3rem; } /* 48px */
+  h4 { font-size: 2.25rem; } /* 36px */
+  h5 { font-size: 1.75rem; } /* 28px */
+  h6 { font-size: 1.3125rem; } /* 21px */
 
   .text-sm {
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.7;
+    font-size: 0.875rem; /* 14px - body2 */
+    line-height: 1.5;
   }
 
   .text-xs {
-    font-size: 0.75rem; /* 12px */
-    line-height: 1.7;
+    font-size: 0.75rem; /* 12px - caption */
+    line-height: 1.5;
   }
 
   code, pre {
     @apply font-code;
+    font-size: 1rem; /* 16px */
   }
 
   /* Mobile responsive typography */
   @media (max-width: 768px) {
     body {
-      font-size: 1rem; /* 16px */
+      font-size: 0.875rem; /* 14px */
     }
 
-    h1 { font-size: 5rem; } /* 80px */
-    h2 { font-size: 4rem; } /* 64px */
-    h3 { font-size: 3rem; } /* 48px */
+    h1 { font-size: 4.75rem; } /* 76px */
+    h2 { font-size: 3.5rem; } /* 56px */
+    h3 { font-size: 2.75rem; } /* 44px */
     h4 { font-size: 2rem; } /* 32px */
     h5 { font-size: 1.5rem; } /* 24px */
-    h6 { font-size: 1.25rem; } /* 20px */
+    h6 { font-size: 1.125rem; } /* 18px */
 
     .text-sm {
-      font-size: 0.875rem; /* 14px */
+      font-size: 0.75rem; /* 12px */
     }
 
     .text-xs {
       font-size: 0.75rem; /* 12px */
+    }
+
+    code, pre {
+      font-size: 0.875rem; /* 14px */
     }
   }
 }

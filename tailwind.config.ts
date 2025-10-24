@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'heading': ['Outfit', 'sans-serif'],
-				'body': ['Manrope', 'sans-serif'],
-				'code': ['Fira Code', 'monospace'],
+				'heading': ['Rajdhani', 'sans-serif'],
+				'body': ['Sentient', 'sans-serif'],
+				'code': ['JetBrains Mono', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

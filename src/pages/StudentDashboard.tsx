@@ -133,7 +133,7 @@ const StudentDashboard = () => {
                         <h3 className="text-xl font-heading font-semibold mb-2">
                           {course.name}
                         </h3>
-                        <p className="text-muted-foreground mb-3 line-clamp-2">
+                        <p className="text-foreground mb-3 line-clamp-2">
                           {course.description}
                         </p>
                         <div className="mb-4">
@@ -194,9 +194,9 @@ const StudentDashboard = () => {
                                 ? 'bg-warning-light'
                                 : 'bg-info-light'
                             }`}>
-                              {item.type === 'class' && <Video className="w-4 h-4 text-secondary" />}
-                              {item.type === 'assessment' && <FileText className="w-4 h-4 text-warning" />}
-                              {item.type === 'assignment' && <FileText className="w-4 h-4 text-info" />}
+                              {item.type === 'class' && <Video className="w-4 h-4 text-secondary dark:text-secondary-dark" />}
+                              {item.type === 'assessment' && <FileText className="w-4 h-4 text-warning dark:text-warning-dark" />}
+                              {item.type === 'assignment' && <FileText className="w-4 h-4 text-info dark:text-info-dark" />}
                             </div>
                           </div>
                           <div className="flex-1">
@@ -204,14 +204,14 @@ const StudentDashboard = () => {
                               <h4 className="text-sm font-medium line-clamp-1">
                                 {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
                               </h4>
-                              <Badge 
-                                variant="outline" 
+                              <Badge
+                                variant="outline"
                                 className={`text-xs px-2 py-0.5 whitespace-nowrap ${
-                                  item.type === 'class' 
-                                    ? 'bg-secondary-light text-secondary border-secondary' 
+                                  item.type === 'class'
+                                    ? 'bg-secondary-light text-secondary dark:text-foreground border-secondary'
                                     : item.type === 'assessment'
-                                    ? 'bg-warning-light text-warning border-warning'
-                                    : 'bg-info-light text-info border-info'
+                                    ? 'bg-warning-light text-warning dark:text-foreground border-warning'
+                                    : 'bg-info-light text-info dark:text-foreground border-info'
                                 }`}
                               >
                                 {item.type === 'class' && 'Live Class'}

@@ -49,9 +49,12 @@ const Header = () => {
       {/* Left - Logo and Navigation */}
       <div className="flex items-center gap-4">
         <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
-          <img 
-            src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
-            alt="Zuvy" 
+          <img
+            src={theme === 'dark'
+              ? "/images/zuvy-logo-horizontal-dark.png"
+              : "/images/zuvy-logo-horizontal.png"
+            }
+            alt="Zuvy"
             className="h-10"
           />
         </div>

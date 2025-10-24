@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "@/lib/ThemeProvider";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const handleGoogleLogin = () => {
     // Navigate to dashboard for demo purposes
@@ -55,10 +57,13 @@ const Login = () => {
       <Card className="w-full max-w-md p-12 md:p-12 p-6 text-center mb-20 md:mb-20">
         {/* Logo */}
         <div className="mb-6">
-          <img 
-            src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
-            alt="Zuvy Logo" 
-            className="w-16 h-16 mx-auto"
+          <img
+            src={theme === 'dark'
+              ? "/images/zuvy-logo-horizontal-dark.png"
+              : "/images/zuvy-logo-horizontal.png"
+            }
+            alt="Zuvy Logo"
+            className="h-14 mx-auto"
           />
         </div>
         
