@@ -38,25 +38,25 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
       case 'class':
         return (
           <div className="w-10 h-10 rounded-full bg-secondary-light flex items-center justify-center">
-            <Video className="w-5 h-5 text-secondary" />
+            <Video className="w-5 h-5 text-secondary dark:text-secondary-dark" />
           </div>
         );
       case 'assessment':
         return (
           <div className="w-10 h-10 rounded-full bg-warning-light flex items-center justify-center">
-            <BookOpen className="w-5 h-5 text-warning" />
+            <BookOpen className="w-5 h-5 text-warning dark:text-warning-dark" />
           </div>
         );
       case 'assignment':
         return (
           <div className="w-10 h-10 rounded-full bg-info-light flex items-center justify-center">
-            <FileText className="w-5 h-5 text-info" />
+            <FileText className="w-5 h-5 text-info dark:text-info-dark" />
           </div>
         );
       default:
         return (
           <div className="w-10 h-10 rounded-full bg-muted-light flex items-center justify-center">
-            <Clock className="w-5 h-5 text-muted-foreground" />
+            <Clock className="w-5 h-5 text-muted-foreground dark:text-foreground" />
           </div>
         );
     }
@@ -98,10 +98,10 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4 mb-2">
-                      <h4 className="font-medium text-base">{item.title}</h4>
+                      <h4 className="font-bold text-base">{item.title}</h4>
                     </div>
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-sm font-medium">
+                      <p className="text-sm">
                         {item.type === 'class' && `Scheduled on ${formatDateTime(item.dateTime)}`}
                         {item.type === 'assessment' && `Starts on ${formatDateTime(item.dateTime)}`}
                         {item.type === 'assignment' && `Due on ${formatDateTime(item.dateTime)}`}
@@ -109,11 +109,11 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
                     </div>
                     {/* CTA - Bottom right */}
                     <div className="flex justify-end">
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="link"
                         disabled={!item.canStart}
-                        className="text-primary p-0 h-auto"
+                        className="text-primary dark:text-secondary p-0 h-auto font-normal"
                       >
                         {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
                       </Button>
@@ -127,9 +127,9 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
             ))}
             {hasMoreItems && (
               <div className="mt-4 pt-4 border-t border-border">
-                <Button 
-                  variant="link" 
-                  className="w-full text-primary p-0 h-auto"
+                <Button
+                  variant="link"
+                  className="w-full text-primary dark:text-secondary p-0 h-auto"
                   onClick={() => setIsViewAllModalOpen(true)}
                 >
                   View All Upcoming Items ({upcomingItems.length})
