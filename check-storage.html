@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+const data = localStorage.getItem('onboarding-data');
+console.log('Onboarding Data:', data);
+if (data) {
+  console.log('Parsed:', JSON.parse(data));
+} else {
+  console.log('No onboarding data found in localStorage');
+}
+</script>
+<p>Check console (F12)</p>
+</body>
+</html>

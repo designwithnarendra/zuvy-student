@@ -15,6 +15,8 @@ import ProjectPage from "./pages/ProjectPage";
 import AssessmentPage from "./pages/AssessmentPage";
 import SolutionViewerPage from "./pages/SolutionViewerPage";
 import CodingProblemPage from "./pages/CodingProblemPage";
+import OnboardingPage from "./pages/OnboardingPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Index />} />
+            <Route path="/onboarding" element={<OnboardingPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<StudentDashboard />} />
             <Route path="/course/:courseId" element={<CourseDashboard />} />
             <Route path="/course/:courseId/syllabus" element={<CourseSyllabusPage />} />

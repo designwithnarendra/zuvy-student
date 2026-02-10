@@ -1,17 +1,22 @@
-
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTheme } from "@/lib/ThemeProvider";
+import { useFirstTimeLogin } from "@/hooks/use-onboarding";
+import { useOnboardingStatus } from "@/hooks/use-onboarding";
 
 const Login = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const { isFirstTimeLogin, markFirstLoginComplete } = useFirstTimeLogin();
+  const { isCompleted } = useOnboardingStatus();
 
   const handleGoogleLogin = () => {
-    // Navigate to dashboard for demo purposes
-    navigate('/dashboard');
+    // Clear onboarding data to start fresh
+    localStorage.removeItem('zuvy_onboarding_data');
+    // Navigate to onboarding basics screen
+    navigate('/onboarding');
   };
 
   // Sample data for the social proof section

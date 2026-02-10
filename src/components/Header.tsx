@@ -1,9 +1,17 @@
 
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, LogOut } from "lucide-react";
+import { Moon, Sun, LogOut, User } from "lucide-react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useTheme } from "@/lib/ThemeProvider";
-import { mockCourses } from "@/lib/mockData";
+import { mockCourses, mockStudent } from "@/lib/mockData";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = () => {
   const { theme, toggleTheme, isThemeLocked } = useTheme();
@@ -98,16 +106,46 @@ const Header = () => {
             <Moon className="h-4 w-4" />
           )}
         </Button>
-        
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleLogout}
-          className="w-9 h-9 p-0 hover:bg-destructive-light hover:text-destructive transition-colors"
-          title="Logout"
-        >
-          <LogOut className="h-4 w-4" />
-        </Button>
+
+        {/* User Menu Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="w-9 h-9 p-0 rounded-full">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="" />
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                  {mockStudent.name
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="px-2 py-1.5 text-sm">
+              <p className="font-semibold text-foreground">{mockStudent.name}</p>
+              <p className="text-xs text-muted-foreground truncate">{mockStudent.email}</p>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => navigate('/profile')}
+              className="cursor-pointer"
+            >
+              <User className="w-4 h-4 mr-2" />
+              View/Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer text-destructive focus:text-destructive"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
