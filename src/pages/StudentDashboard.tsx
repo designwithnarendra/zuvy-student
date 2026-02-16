@@ -156,13 +156,13 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background mb-12">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
       <Header />
-      <div className="container mx-auto px-4 md:px-6 py-8 max-w-7xl">
+      <div className="container mx-auto px-4 md:px-6 pt-8 max-w-7xl flex-1 min-h-0">
         {/* 2-Column Layout: 3/4 Main Content + 1/4 Profile Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
           {/* Main Content - 3/4 width */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-6 overflow-y-auto pb-8 pr-2 scrollbar-hide">
             {/* Onboarding Completion Banner */}
             {!isCompleted && hasSkipped && !dismissedBanner && (
               <Alert className="border-blue-200 bg-blue-50 dark:bg-blue-950/20">
@@ -195,7 +195,7 @@ const StudentDashboard = () => {
             {/* Welcome Message */}
             <div className="mb-8">
               <h1 className="text-3xl font-heading font-bold mb-2">
-                Welcome {mockStudent.name}!
+                Welcome back, {mockStudent.name}!
               </h1>
               <p className="text-lg text-muted-foreground">
                 What will you be learning today?
@@ -220,7 +220,7 @@ const StudentDashboard = () => {
                       </p>
                     </div>
                   </div>
-                  <Button className="bg-green-700 hover:bg-green-800 text-white flex-shrink-0">
+                  <Button className="flex-shrink-0">
                     Learn with zoe
                   </Button>
                 </div>
@@ -234,18 +234,18 @@ const StudentDashboard = () => {
               {/* Filter Tabs */}
               <div className="flex gap-3 mb-6">
                 <Button
-                  variant={filter === 'enrolled' ? 'default' : 'ghost'}
+                  variant={filter === 'enrolled' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setFilter('enrolled')}
-                  className={`rounded-full ${filter === 'enrolled' ? 'bg-green-700 hover:bg-green-800 text-white' : 'hover:bg-muted'}`}
+                  className="rounded-full hover:bg-primary-light hover:text-foreground"
                 >
                   Enrolled
                 </Button>
                 <Button
-                  variant={filter === 'completed' ? 'default' : 'ghost'}
+                  variant={filter === 'completed' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setFilter('completed')}
-                  className={`rounded-full ${filter === 'completed' ? 'bg-green-700 hover:bg-green-800 text-white' : 'hover:bg-muted'}`}
+                  className="rounded-full hover:bg-primary-light hover:text-foreground"
                 >
                   Completed
                 </Button>
@@ -255,53 +255,65 @@ const StudentDashboard = () => {
             {/* Course Cards */}
             <div className="space-y-6">
               {filteredCourses.map((course) => (
-            <Card key={course.id} className="w-full shadow-sm hover:shadow-md transition-shadow duration-200">
+            <Card key={course.id} className="w-full shadow-4dp hover:shadow-8dp transition-shadow duration-200">
               <CardContent className="p-6">
-                <div className="flex items-start justify-between gap-6">
-                  {/* Left: Course Image and Info */}
-                  <div className="flex items-start gap-4 flex-1">
-                    {/* Course Image */}
-                    <div className="flex-shrink-0">
-                      <img
-                        src={course.image}
-                        alt={course.name}
-                        className="w-20 h-20 rounded-lg object-cover"
-                      />
-                    </div>
-                    
-                    {/* Course Info */}
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-1">
-                        {course.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        description
-                      </p>
-                      <div className="mb-3">
-                        <span className="text-sm text-muted-foreground">
-                          Instructor: {course.instructor.name}
-                        </span>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="flex items-center gap-3">
-                        <div className="relative bg-muted rounded-full h-2 flex-1">
-                          <div 
-                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${course.progress}%` }}
-                          />
-                        </div>
-                        <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">{course.progress}%</span>
-                      </div>
-                    </div>
+                <div className="flex flex-col md:flex-row gap-6">
+                  {/* Course Image */}
+                  <div className="flex-shrink-0 md:w-24 md:h-24">
+                    <img
+                      src={course.image}
+                      alt={course.name}
+                      className="w-full h-24 md:w-24 md:h-24 rounded-lg object-cover"
+                    />
                   </div>
 
-                  {/* Right: Action Button */}
-                  <div className="flex-shrink-0">
-                    <Button className="bg-green-700 hover:bg-green-800 text-white">
-                      <Play className="w-4 h-4 mr-2" />
-                      Start Learning
-                    </Button>
+                  {/* Course Info */}
+                  <div className="flex-1">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-heading font-semibold mb-2">
+                          {course.name}
+                        </h3>
+                        <p className="text-foreground mb-3 line-clamp-2">
+                          {course.description}
+                        </p>
+                        <div className="mb-4">
+                          <span className="text-sm text-muted-foreground">
+                            Instructor: {course.instructor.name}
+                          </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="mb-4 md:mb-0">
+                          <div className="relative bg-primary-light rounded-full h-2 w-full">
+                            <div
+                              className="bg-primary h-2 rounded-full transition-all duration-300 relative"
+                              style={{ width: `${course.progress}%` }}
+                            >
+                              <div
+                                className="absolute top-1/2 transform -translate-y-1/2 progress-label-bg progress-label px-2 py-0.5 rounded shadow-sm border text-xs font-medium whitespace-nowrap"
+                                style={{
+                                  right: course.progress === 100 ? '0' : course.progress === 0 ? 'auto' : '-12px',
+                                  left: course.progress === 0 ? '0' : 'auto'
+                                }}
+                              >
+                                {course.progress}%
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Button - Desktop */}
+                      <div className="hidden md:flex flex-shrink-0">
+                        {getActionButton(course)}
+                      </div>
+                    </div>
+
+                    {/* Action Button - Mobile */}
+                    <div className="md:hidden mt-4">
+                      {getActionButton(course)}
+                    </div>
                   </div>
                 </div>
 
@@ -311,45 +323,47 @@ const StudentDashboard = () => {
                     {/* Separator */}
                     <div className="border-t border-border my-6"></div>
 
-                    {/* Chapter Cards with Drag Scroll */}
-                    <div 
-                      className="overflow-x-auto -mx-6 px-6 cursor-grab active:cursor-grabbing" 
-                      style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
+                    {/* Upcoming Items — horizontal scroll */}
+                    <div
+                      className="overflow-x-auto scrollbar-hide -mx-6 px-6 cursor-grab active:cursor-grabbing"
                       onMouseEnter={handleDragScroll}
                     >
-                      <style dangerouslySetInnerHTML={{__html: `
-                        .overflow-x-auto::-webkit-scrollbar {
-                          display: none;
-                        }
-                      `}} />
-                      <div className="flex gap-4 min-w-max">
-                        {course.upcomingItems.slice(0, 3).map((item, index) => (
-                          <Card key={item.id} className="w-80 bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900 hover:shadow-md transition-shadow">
-                            <CardContent className="p-4">
-                              <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded bg-amber-100 dark:bg-amber-900 flex items-center justify-center flex-shrink-0">
-                                  <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                      <div className="flex items-stretch pb-1">
+                        {course.upcomingItems.slice(0, 5).map((item, index) => (
+                          <div key={item.id} className="flex items-stretch">
+                            {index > 0 && <div className="border-l border-border mx-4 self-stretch" />}
+                            <div className="flex flex-col gap-1 min-w-[180px] py-1">
+                              {/* Row 1: icon + title + badge */}
+                              <div className="flex items-center gap-3">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                                  item.type === 'class' ? 'bg-secondary/20'
+                                  : item.type === 'assessment' ? 'bg-warning/20'
+                                  : 'bg-info/20'
+                                }`}>
+                                  {item.type === 'class'
+                                    ? <Video className="w-4 h-4 text-secondary dark:text-secondary-dark" />
+                                    : <FileText className={`w-4 h-4 ${item.type === 'assessment' ? 'text-warning dark:text-warning-dark' : 'text-info dark:text-info-dark'}`} />
+                                  }
                                 </div>
-                                <div className="flex-1">
-                                  <div className="flex items-start justify-between gap-2 mb-2">
-                                    <h4 className="text-sm font-medium">Chapter {index + 1}</h4>
-                                    <Badge className="bg-amber-100 hover:bg-amber-100 text-amber-800 dark:text-amber-200 border-amber-300 text-xs px-2 py-0">
-                                      Assessment
-                                    </Badge>
-                                  </div>
-                                  <p className="text-xs text-muted-foreground">
-                                    Due Date: {new Date(item.dateTime).toLocaleDateString('en-US', { 
-                                      month: 'short', 
-                                      day: 'numeric', 
-                                      year: 'numeric',
-                                      hour: '2-digit',
-                                      minute: '2-digit'
-                                    })}
-                                  </p>
-                                </div>
+                                <span className="text-sm font-medium whitespace-nowrap">
+                                  {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
+                                </span>
+                                <Badge variant="outline" className={`ml-6 text-xs px-2 py-0.5 whitespace-nowrap flex-shrink-0 ${
+                                  item.type === 'class' ? 'bg-secondary-light text-secondary dark:text-foreground border-secondary'
+                                  : item.type === 'assessment' ? 'bg-warning-light text-warning dark:text-foreground border-warning'
+                                  : 'bg-info-light text-info dark:text-foreground border-info'
+                                }`}>
+                                  {item.type === 'class' ? 'Live Class' : item.type === 'assessment' ? 'Assessment' : 'Assignment'}
+                                </Badge>
                               </div>
-                            </CardContent>
-                          </Card>
+                              {/* Row 2: date only (aligned under title) */}
+                              <div className="pl-11">
+                                <span className="text-xs text-muted-foreground whitespace-nowrap">
+                                  {item.type === 'assignment' ? 'Due' : 'Starts'} in {formatUpcomingItem(item)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -379,8 +393,8 @@ const StudentDashboard = () => {
           </div>
 
           {/* Profile Strength Sidebar - 1/4 width */}
-          <div className="lg:col-span-1 space-y-4">
-            <Card className="sticky top-6 shadow-sm">
+          <div className="lg:col-span-1 space-y-4 overflow-y-auto pb-8">
+            <Card className="shadow-sm">
               <CardContent className="p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
