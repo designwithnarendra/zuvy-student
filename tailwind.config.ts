@@ -20,11 +20,17 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'heading': ['Rajdhani', 'sans-serif'],
-				'body': ['Sentient', 'sans-serif'],
+				'heading': ['Plein', 'sans-serif'],
+				'body': ['Switzer', 'sans-serif'],
 				'code': ['JetBrains Mono', 'monospace'],
 			},
 			colors: {
+				'background-secondary': 'hsl(var(--background-secondary))',
+				grey: {
+					light: 'hsl(var(--grey-light))',
+					DEFAULT: 'hsl(var(--grey))',
+					dark: 'hsl(var(--grey-dark))',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -89,6 +95,13 @@ export default {
 			spacing: {
 				'18': '4.5rem',
 				'22': '5.5rem',
+			},
+			boxShadow: {
+				soft: 'var(--shadow-soft)',
+				medium: 'var(--shadow-medium)',
+				strong: 'var(--shadow-strong)',
+				accent: 'var(--shadow-accent)',
+				secondary: 'var(--shadow-secondary)',
 			},
 			keyframes: {
 				'accordion-down': {

@@ -38,7 +38,8 @@ import {
   Trash2,
   Loader2,
   Check,
-  ChevronDown
+  ChevronDown,
+  ChevronLeft
 } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useOnboardingStorage } from '@/hooks/use-onboarding';
@@ -407,7 +408,14 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background pb-12">
       <Header />
-      
+
+      <div className="container mx-auto px-4 md:px-6 pt-6 max-w-4xl">
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="gap-1 text-muted-foreground hover:text-foreground -ml-2">
+          <ChevronLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Button>
+      </div>
+
       {/* Project Modal */}
       <ProjectModal
         isOpen={showProjectModal}

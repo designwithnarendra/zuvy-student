@@ -7,19 +7,33 @@
 
 @layer base {
   :root {
+    /*
+     * Text Color Hierarchy (shadcn/ui convention):
+     * - text-foreground: Primary text (headings, body text, important content)
+     * - text-muted-foreground: Secondary text (labels, captions, metadata)
+     * - text-muted-foreground/50: Tertiary/disabled (using opacity)
+     * - text-primary: Brand-colored links and CTAs
+     * - text-accent: Interactive highlights and hover states
+     *
+     * This maps to our style guide as:
+     * --foreground ≈ text-primary (style guide)
+     * --muted-foreground ≈ text-tertiary (style guide)
+     */
+
     /* Base Colors - The foundation of your interface */
-    --background: 48 30% 95%;         /* #F5F4ED - Warm off-white background */
-    --foreground: 0 0% 17%;           /* #2B2B2B - Primary text color */
+    --background: 30 30% 98%;         /* #FAF9F7 - Cream white background */
+    --background-secondary: 0 0% 100%; /* #FFFFFF - Pure white for secondary surfaces */
+    --foreground: 150 15% 15%;        /* #21302B - Primary text color */
 
     /* Card and Surface Colors - Creates depth and hierarchy */
     --card: 0 0% 100%;                /* #FFFFFF - White surface */
     --card-light: 0 0% 99%;           /* #FEFEFE - Elevated surface */
     --card-elevated: 0 0% 100%;       /* #FFFFFF - Surface variant */
-    --card-foreground: 0 0% 17%;      /* #2B2B2B - Consistent text color */
+    --card-foreground: 150 15% 15%;   /* #21302B - Consistent text color */
 
     /* Popover and Modal Colors - Maintains visual consistency */
     --popover: 0 0% 100%;             /* White background for dropdowns */
-    --popover-foreground: 0 0% 17%;   /* #2B2B2B - Same readable text */
+    --popover-foreground: 150 15% 15%; /* #21302B - Same readable text */
 
     /* Primary Brand Colors - Forest Green */
     --primary: 122 36% 27%;           /* #2C5F2D - Forest green base */
@@ -27,23 +41,23 @@
     --primary-dark: 122 40% 20%;      /* #1D4620 - Darker green for emphasis/active states */
     --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text on primary */
     
-    /* Secondary Brand Colors - Bright Teal */
-    --secondary: 152 86% 50%;         /* #12EA7B - Bright teal */
-    --secondary-light: 152 100% 94%;  /* #E0FFF0 - Light teal for subtle backgrounds */
-    --secondary-dark: 152 85% 39%;    /* #0DB862 - Darker teal for emphasis */
-    --secondary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on teal backgrounds */
+    /* Secondary Brand Colors - Sunset Orange */
+    --secondary: 25 80% 52%;          /* #EB7E2E - Sunset orange */
+    --secondary-light: 25 85% 94%;    /* #FDEEE3 - Light orange for subtle backgrounds */
+    --secondary-dark: 25 80% 42%;     /* #C66418 - Darker orange for emphasis */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF - White text on orange backgrounds */
 
     /* Muted Colors - Subtle backgrounds and disabled states */
-    --muted: 0 0% 92%;                /* #E8E7DC - Grey light for subtle backgrounds */
+    --muted: 30 20% 92%;              /* #F0EEEB - Grey light for subtle backgrounds */
     --muted-light: 0 0% 96%;          /* Lighter muted for minimal backgrounds */
     --muted-dark: 0 0% 87%;           /* Slightly darker muted for definition */
-    --muted-foreground: 0 0% 54%;     /* #8A8A8A - Grey regular for secondary text */
+    --muted-foreground: 150 8% 50%;   /* #7B857F - Grey regular for secondary text */
 
-    /* Accent Colors - Amber Gold */
-    --accent: 38 92% 50%;             /* #F59E0B - Amber gold */
-    --accent-light: 45 93% 89%;       /* #FEF3C7 - Light amber for subtle backgrounds */
-    --accent-dark: 33 92% 44%;        /* #D97706 - Dark amber for emphasis */
-    --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text on accent */
+    /* Accent Colors - Bright Teal */
+    --accent: 153 91% 49%;            /* #12EA7B - Bright teal */
+    --accent-light: 153 91% 94%;      /* #E0FFF0 - Light teal for subtle backgrounds */
+    --accent-dark: 151 91% 39%;       /* #0DB862 - Dark teal for emphasis */
+    --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text on teal */
     
     /* Destructive/Error Colors - Error Red */
     --destructive: 0 68% 51%;         /* #D32F2F - Error red */
@@ -52,9 +66,14 @@
     --destructive-foreground: 0 0% 100%; /* #FFFFFF - White text on error */
 
     /* Border and Outline Colors - Subtle definition */
-    --border: 45 22% 90%;             /* #E8E7DC - Grey light for borders */
-    --input: 45 22% 90%;              /* Same as border for consistency */
+    --border: 30 20% 90%;             /* #EBE8E3 - Grey light for borders */
+    --input: 30 20% 90%;              /* Same as border for consistency */
     --ring: 122 36% 27%;              /* Forest green for focus rings */
+
+    /* Grey System - Utility tokens */
+    --grey-light: 30 15% 88%;         /* #E3E1DD - Borders, dividers */
+    --grey: 150 8% 50%;               /* #7B857F - Muted text, icons */
+    --grey-dark: 150 10% 28%;         /* #404945 - Dark backgrounds */
 
     /* Radius Values - Modern, friendly corner rounding */
     --radius: 0.5rem;                 /* 8px radius for modern feel */
@@ -106,13 +125,20 @@
     --shadow-error: 0 4px 6px -1px rgba(211, 47, 47, 0.1), 0 2px 4px -2px rgba(211, 47, 47, 0.1);
     --shadow-info: 0 4px 6px -1px rgba(25, 118, 210, 0.1), 0 2px 4px -2px rgba(25, 118, 210, 0.1);
 
+    /* Named shadow system - Modern approach */
+    --shadow-soft: 0 2px 8px hsl(120 37% 27% / 0.06);
+    --shadow-medium: 0 4px 16px hsl(120 37% 27% / 0.1);
+    --shadow-strong: 0 8px 32px hsl(120 37% 27% / 0.15);
+    --shadow-accent: 0 4px 16px hsl(153 91% 49% / 0.2);
+    --shadow-secondary: 0 4px 16px hsl(25 80% 52% / 0.2);
+
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 17%;
+    --sidebar-foreground: 150 15% 15%;
     --sidebar-primary: 122 36% 27%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 17%;
-    --sidebar-border: 45 22% 90%;
+    --sidebar-accent-foreground: 150 15% 15%;
+    --sidebar-border: 30 20% 90%;
     --sidebar-ring: 122 36% 27%;
   }
 
@@ -120,17 +146,18 @@
   .dark {
     /* Dark Base Colors - Deep charcoal backgrounds */
     --background: 0 0% 10%;           /* #1A1A1A - Dark background */
-    --foreground: 48 30% 95%;         /* #F5F4ED - Light text */
+    --background-secondary: 0 0% 12%; /* Slightly lighter */
+    --foreground: 30 30% 98%;         /* #FAF9F7 - Light text (better contrast) */
 
     /* Dark Card Colors - Enhanced elevation */
     --card: 0 0% 15%;                 /* #262626 - Surface */
     --card-light: 0 0% 10%;           /* #1A1A1A - Minimal elevation */
     --card-elevated: 0 0% 18%;        /* #2E2E2E - Elevated surface */
-    --card-foreground: 48 30% 95%;    /* #F5F4ED - Light text */
+    --card-foreground: 30 30% 98%;    /* #FAF9F7 - Light text */
 
     /* Dark Popover Colors */
     --popover: 0 0% 10%;              /* #1A1A1A - Consistent with background */
-    --popover-foreground: 48 30% 95%; /* #F5F4ED - Light text */
+    --popover-foreground: 30 30% 98%; /* #FAF9F7 - Light text */
 
     /* Dark Primary Colors - Forest Green Dark */
     --primary: 122 35% 36%;           /* #3A7A3D - Brighter forest green */
@@ -138,22 +165,27 @@
     --primary-dark: 122 35% 45%;      /* #4A9A4D - Bright green for emphasis */
     --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text */
 
-    /* Dark Secondary Colors - Bright Teal Dark */
-    --secondary: 152 86% 50%;         /* #12EA7B - Same bright teal */
-    --secondary-light: 152 85% 39%;   /* #0DB862 - Subtle teal */
-    --secondary-dark: 152 100% 62%;   /* #1FFFA0 - Brighter teal */
-    --secondary-foreground: 0 0% 10%; /* #1A1A1A - Dark text */
+    /* Dark Secondary Colors - Sunset Orange Dark */
+    --secondary: 25 80% 52%;          /* #EB7E2E - Same sunset orange */
+    --secondary-light: 25 80% 42%;    /* Subtle orange */
+    --secondary-dark: 25 85% 62%;     /* Brighter orange */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF - White text */
 
     /* Dark Muted Colors - Improved contrast */
     --muted: 0 0% 25%;                /* #404040 - Grey light (inverted) */
     --muted-light: 0 0% 30%;          /* Lighter muted */
     --muted-dark: 0 0% 20%;           /* Darker muted */
-    --muted-foreground: 0 0% 60%;     /* #999999 - Grey regular with better contrast */
+    --muted-foreground: 30 15% 70%;   /* Better contrast for dark mode */
 
-    /* Dark Accent Colors - Amber Gold Dark */
-    --accent: 38 92% 50%;             /* #F59E0B - Same amber */
-    --accent-light: 33 92% 44%;       /* #D97706 - Subtle amber */
-    --accent-dark: 45 98% 60%;        /* #FBBF24 - Brighter amber */
+    /* Dark Grey System */
+    --grey-light: 0 0% 25%;
+    --grey: 0 0% 45%;
+    --grey-dark: 30 15% 88%;
+
+    /* Dark Accent Colors - Bright Teal Dark */
+    --accent: 153 91% 49%;            /* #12EA7B - Same bright teal */
+    --accent-light: 151 91% 39%;      /* #0DB862 - Subtle teal */
+    --accent-dark: 153 91% 56%;       /* Brighter teal */
     --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text */
 
     /* Dark Destructive Colors - Error Red Dark */
@@ -192,11 +224,11 @@
     --progress-label-bg: 0 0% 18%;    /* Dark background */
 
     --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 48 30% 95%;
+    --sidebar-foreground: 30 30% 98%;
     --sidebar-primary: 122 35% 36%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 20%;
-    --sidebar-accent-foreground: 48 30% 95%;
+    --sidebar-accent-foreground: 30 30% 98%;
     --sidebar-border: 0 0% 25%;
     --sidebar-ring: 122 35% 36%;
   }
@@ -236,6 +268,7 @@
   /* Typography utilities */
   /* Removed text-h6 class as we'll use the existing h6 element styling */
 
+  /* Numbered shadow system (legacy - kept for backwards compatibility) */
   .shadow-2dp { box-shadow: var(--shadow-2dp); }
   .shadow-4dp { box-shadow: var(--shadow-4dp); }
   .shadow-8dp { box-shadow: var(--shadow-8dp); }
@@ -249,6 +282,21 @@
   .shadow-warning { box-shadow: var(--shadow-warning); }
   .shadow-error { box-shadow: var(--shadow-error); }
   .shadow-info { box-shadow: var(--shadow-info); }
+
+  /* Named shadow system (modern - preferred for new components) */
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-medium { box-shadow: var(--shadow-medium); }
+  .shadow-strong { box-shadow: var(--shadow-strong); }
+  .shadow-accent { box-shadow: var(--shadow-accent); }
+  .shadow-secondary { box-shadow: var(--shadow-secondary); }
+
+  /* Grey system utilities */
+  .bg-grey-light { background-color: hsl(var(--grey-light)); }
+  .bg-grey { background-color: hsl(var(--grey)); }
+  .bg-grey-dark { background-color: hsl(var(--grey-dark)); }
+  .text-grey-light { color: hsl(var(--grey-light)); }
+  .text-grey { color: hsl(var(--grey)); }
+  .text-grey-dark { color: hsl(var(--grey-dark)); }
 
   .progress-bg { background-color: hsl(var(--progress-bg)); }
   .progress-fill { background-color: hsl(var(--progress-fill)); }
