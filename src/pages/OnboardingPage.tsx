@@ -279,28 +279,34 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({ userEmail = '', 
                 </div>
               </div>
             </div>
-            {/* Segmented Progress Bar */}
+            {/* Segmented Progress Bar — fills in trail order (left-to-right forward, right-to-left backward) */}
             <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => goToStep(1)}
-                className={`h-2 flex-1 rounded-full transition-colors cursor-pointer ${currentStep > 1 ? 'bg-primary hover:bg-primary/80' : 'bg-muted hover:bg-muted/80'}`}
-              />
-              <button
-                type="button"
-                onClick={() => goToStep(2)}
-                className={`h-2 flex-1 rounded-full transition-colors cursor-pointer ${currentStep > 2 ? 'bg-primary hover:bg-primary/80' : 'bg-muted hover:bg-muted/80'}`}
-              />
-              <button
-                type="button"
-                onClick={() => goToStep(3)}
-                className={`h-2 flex-1 rounded-full transition-colors cursor-pointer ${currentStep > 3 ? 'bg-primary hover:bg-primary/80' : 'bg-muted hover:bg-muted/80'}`}
-              />
-              <button
-                type="button"
-                onClick={() => goToStep(4)}
-                className={`h-2 flex-1 rounded-full transition-colors cursor-pointer ${currentStep > 4 ? 'bg-primary hover:bg-primary/80' : 'bg-muted hover:bg-muted/80'}`}
-              />
+              {[1, 2, 3, 4].map((step) => {
+                const isFilled = currentStep >= step;
+                // Forward trail: segment 1 fills first, then 2, then 3…
+                // Backward trail: highest-numbered empty segment collapses first
+                const forwardDelay = (step - 1) * 120;
+                const backwardDelay = (3 - (step - 1)) * 120;
+                const delay = isFilled ? forwardDelay : backwardDelay;
+                return (
+                  <button
+                    key={step}
+                    type="button"
+                    onClick={() => goToStep(step)}
+                    className="h-2 flex-1 rounded-full bg-muted cursor-pointer relative overflow-hidden"
+                    aria-label={`Go to step ${step}`}
+                  >
+                    <span
+                      className="absolute inset-y-0 left-0 bg-primary rounded-full transition-[width] ease-in-out"
+                      style={{
+                        width: isFilled ? '100%' : '0%',
+                        transitionDuration: '650ms',
+                        transitionDelay: `${delay}ms`,
+                      }}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>

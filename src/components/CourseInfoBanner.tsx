@@ -3,27 +3,70 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Clock, Users } from "lucide-react";
+import AnimatedProgressBar from "@/components/AnimatedProgressBar";
 import { Course } from "@/lib/mockData";
 
 interface CourseInfoBannerProps {
   course: Course;
 }
 
+const PREVIEW_WORD_COUNT = 25;
+
 const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  // Helper function to truncate description to approximately 2 lines
-  const getTruncatedDescription = (text: string) => {
-    const words = text.split(' ');
-    if (words.length <= 25) return text; // Roughly 2 lines worth of words
-    return words.slice(0, 25).join(' ') + '...';
-  };
+  const words = course.description.split(' ');
+  const needsViewMore = words.length > PREVIEW_WORD_COUNT;
+  const previewText = words.slice(0, PREVIEW_WORD_COUNT).join(' ');
+  const extraText = needsViewMore ? words.slice(PREVIEW_WORD_COUNT).join(' ') : '';
 
-  const displayDescription = showFullDescription ? course.description : getTruncatedDescription(course.description);
-  const needsViewMore = course.description.split(' ').length > 25;
+  // Inline to avoid component remount killing the CSS transition
+  const descriptionBlock = (
+    <div className="mb-4">
+      <p className="text-base md:text-lg text-foreground">
+        {previewText}
+        {needsViewMore && !showFullDescription && '...'}
+      </p>
+      {needsViewMore && (
+        <>
+          {/* grid-template-rows 0fr→1fr animates height; opacity fades in content */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateRows: showFullDescription ? '1fr' : '0fr',
+              transitionProperty: 'grid-template-rows',
+              transitionDuration: '350ms',
+              transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            <div style={{ overflow: 'hidden' }}>
+              <p
+                className="text-base md:text-lg text-foreground mt-0 pt-0"
+                style={{
+                  opacity: showFullDescription ? 1 : 0,
+                  transitionProperty: 'opacity',
+                  transitionDuration: '300ms',
+                  transitionTimingFunction: 'ease',
+                }}
+              >
+                {extraText}
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="link"
+            className="text-primary dark:text-secondary mt-1"
+            onClick={() => setShowFullDescription(prev => !prev)}
+          >
+            {showFullDescription ? 'View Less' : 'View More'}
+          </Button>
+        </>
+      )}
+    </div>
+  );
 
   return (
-    <div className="w-full rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50">
+    <div className="w-full rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50 animate-slide-down-banner">
       <div className="max-w-7xl mx-auto p-6 md:p-8">
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col md:flex-row items-start gap-6 mb-6">
@@ -38,21 +81,12 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
-                <p className="text-base md:text-lg text-foreground mb-4">{displayDescription}</p>
-                {needsViewMore && (
-                  <Button
-                    variant="link"
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="p-0 h-auto text-primary dark:text-secondary mb-4"
-                  >
-                    {showFullDescription ? 'View Less' : 'View More'}
-                  </Button>
-                )}
+                {descriptionBlock}
                 <div className="mb-4">
                   <span className="font-medium">Instructor: {course.instructor.name}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-end gap-1">
                 <p className="text-sm text-muted-foreground">In Collaboration With</p>
                 <img
                   src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
@@ -72,20 +106,11 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
             className="w-full h-40 rounded-lg object-cover mb-4"
           />
           <h1 className="text-2xl font-heading font-bold mb-2">{course.name}</h1>
-          <p className="text-base text-foreground mb-4">{displayDescription}</p>
-          {needsViewMore && (
-            <Button
-              variant="link"
-              onClick={() => setShowFullDescription(!showFullDescription)}
-              className="p-0 h-auto text-primary dark:text-secondary mb-4"
-            >
-              {showFullDescription ? 'View Less' : 'View More'}
-            </Button>
-          )}
+          {descriptionBlock}
           <div className="mb-4">
             <span className="font-medium">Instructor: {course.instructor.name}</span>
           </div>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex flex-col items-end gap-1 mb-4">
             <p className="text-sm text-muted-foreground">In Collaboration With</p>
             <img
               src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
@@ -97,22 +122,7 @@ const CourseInfoBanner = ({ course }: CourseInfoBannerProps) => {
 
         {/* Progress Bar */}
         <div className="mb-6">
-          <div className="relative bg-primary-light rounded-full h-2 w-full">
-            <div 
-              className="bg-primary h-2 rounded-full transition-all duration-300 relative"
-              style={{ width: `${course.progress}%` }}
-            >
-              <div 
-                className="absolute top-1/2 transform -translate-y-1/2 progress-label-bg progress-label px-2 py-0.5 rounded shadow-sm border text-xs font-medium whitespace-nowrap"
-                style={{ 
-                  right: course.progress === 100 ? '0' : course.progress === 0 ? 'auto' : '-12px',
-                  left: course.progress === 0 ? '0' : 'auto'
-                }}
-              >
-                {course.progress}%
-              </div>
-            </div>
-          </div>
+          <AnimatedProgressBar progress={course.progress} />
         </div>
 
         {/* Batch Information */}

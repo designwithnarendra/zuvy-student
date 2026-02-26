@@ -39,12 +39,14 @@
     --primary: 122 36% 27%;           /* #2C5F2D - Forest green base */
     --primary-light: 122 39% 93%;     /* #E8F5E9 - Light green for subtle backgrounds/hover */
     --primary-dark: 122 40% 20%;      /* #1D4620 - Darker green for emphasis/active states */
+    --primary-mid: 122 37% 40%;       /* Intermediate green, biased toward primary (darker side) */
     --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text on primary */
-    
+
     /* Secondary Brand Colors - Sunset Orange */
     --secondary: 25 80% 52%;          /* #EB7E2E - Sunset orange */
     --secondary-light: 25 85% 94%;    /* #FDEEE3 - Light orange for subtle backgrounds */
     --secondary-dark: 25 80% 42%;     /* #C66418 - Darker orange for emphasis */
+    --secondary-mid: 25 82% 64%;      /* Intermediate orange, biased toward secondary (darker side) */
     --secondary-foreground: 0 0% 100%; /* #FFFFFF - White text on orange backgrounds */
 
     /* Muted Colors - Subtle backgrounds and disabled states */
@@ -57,8 +59,9 @@
     --accent: 153 91% 49%;            /* #12EA7B - Bright teal */
     --accent-light: 153 91% 94%;      /* #E0FFF0 - Light teal for subtle backgrounds */
     --accent-dark: 151 91% 39%;       /* #0DB862 - Dark teal for emphasis */
+    --accent-mid: 153 91% 62%;        /* Intermediate teal, biased toward accent (darker side) */
     --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text on teal */
-    
+
     /* Destructive/Error Colors - Error Red */
     --destructive: 0 68% 51%;         /* #D32F2F - Error red */
     --destructive-light: 0 100% 97%;  /* #FFEBEE - Light red for backgrounds */
@@ -163,12 +166,14 @@
     --primary: 122 35% 36%;           /* #3A7A3D - Brighter forest green */
     --primary-light: 122 36% 27%;     /* #2C5F2D - Subtle green */
     --primary-dark: 122 35% 45%;      /* #4A9A4D - Bright green for emphasis */
+    --primary-mid: 122 36% 32%;       /* Intermediate green between dark primary and primary-light */
     --primary-foreground: 0 0% 100%;  /* #FFFFFF - White text */
 
     /* Dark Secondary Colors - Sunset Orange Dark */
     --secondary: 25 80% 52%;          /* #EB7E2E - Same sunset orange */
     --secondary-light: 25 80% 42%;    /* Subtle orange */
     --secondary-dark: 25 85% 62%;     /* Brighter orange */
+    --secondary-mid: 25 80% 47%;      /* Intermediate orange between dark secondary and secondary-light */
     --secondary-foreground: 0 0% 100%; /* #FFFFFF - White text */
 
     /* Dark Muted Colors - Improved contrast */
@@ -186,6 +191,7 @@
     --accent: 153 91% 49%;            /* #12EA7B - Same bright teal */
     --accent-light: 151 91% 39%;      /* #0DB862 - Subtle teal */
     --accent-dark: 153 91% 56%;       /* Brighter teal */
+    --accent-mid: 152 91% 44%;        /* Intermediate teal between dark accent and accent-light */
     --accent-foreground: 0 0% 10%;    /* #1A1A1A - Dark text */
 
     /* Dark Destructive Colors - Error Red Dark */
@@ -239,12 +245,15 @@
   .bg-card-light { background-color: hsl(var(--card-light)); }
   .bg-card-elevated { background-color: hsl(var(--card-elevated)); }
   .bg-primary-light { background-color: hsl(var(--primary-light)); }
+  .bg-primary-mid { background-color: hsl(var(--primary-mid)); }
   .bg-primary-dark { background-color: hsl(var(--primary-dark)); }
   .bg-secondary-light { background-color: hsl(var(--secondary-light)); }
+  .bg-secondary-mid { background-color: hsl(var(--secondary-mid)); }
   .bg-secondary-dark { background-color: hsl(var(--secondary-dark)); }
   .bg-muted-light { background-color: hsl(var(--muted-light)); }
   .bg-muted-dark { background-color: hsl(var(--muted-dark)); }
   .bg-accent-light { background-color: hsl(var(--accent-light)); }
+  .bg-accent-mid { background-color: hsl(var(--accent-mid)); }
   .bg-accent-dark { background-color: hsl(var(--accent-dark)); }
   .bg-destructive-light { background-color: hsl(var(--destructive-light)); }
   .bg-destructive-dark { background-color: hsl(var(--destructive-dark)); }
@@ -256,10 +265,13 @@
   .bg-info-dark { background-color: hsl(var(--info-dark)); }
 
   .text-primary-light { color: hsl(var(--primary-light)); }
+  .text-primary-mid { color: hsl(var(--primary-mid)); }
   .text-primary-dark { color: hsl(var(--primary-dark)); }
   .text-secondary-light { color: hsl(var(--secondary-light)); }
+  .text-secondary-mid { color: hsl(var(--secondary-mid)); }
   .text-secondary-dark { color: hsl(var(--secondary-dark)); }
   .text-accent-light { color: hsl(var(--accent-light)); }
+  .text-accent-mid { color: hsl(var(--accent-mid)); }
   .text-accent-dark { color: hsl(var(--accent-dark)); }
   .text-success-dark { color: hsl(var(--success-dark)); }
   .text-warning-dark { color: hsl(var(--warning-dark)); }
@@ -377,4 +389,59 @@
       font-size: 0.875rem; /* 14px */
     }
   }
+}
+
+/* ─── Motion Foundation ────────────────────────────────────────────────────── */
+
+/* Respect system-level reduced-motion preference for all animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Ghost button animated underline — draws left-to-right on hover.
+   Apply `.ghost-btn-underline` to any ghost/text button that needs this effect.
+   Requires `position: relative` on the element (already present via flex layout). */
+@layer components {
+  .ghost-btn-underline {
+    position: relative;
+  }
+
+  .ghost-btn-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease-out;
+  }
+
+  .ghost-btn-underline:hover::after {
+    transform: scaleX(1);
+  }
+
+}
+
+/* Join Class button: green glow pulse synced to the Live Now 2.2s rhythm */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px 0px hsl(var(--success) / 0), 0 0 0px 0px hsl(var(--success) / 0);
+  }
+  50% {
+    box-shadow: 0 0 14px 5px hsl(var(--success) / 0.6), 0 0 32px 12px hsl(var(--success) / 0.25);
+  }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 2.2s ease-in-out infinite;
+}
+.animate-glow-pulse:hover {
+  animation: none;
+  box-shadow: none;
 }

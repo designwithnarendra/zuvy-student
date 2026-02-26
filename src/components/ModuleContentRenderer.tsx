@@ -11,7 +11,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Play, Check, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { TopicItem } from "@/lib/mockData";
-import { getStatusBadgeStyles, formatDate, formatDateTime } from "@/lib/utils";
+import { cn, getStatusBadgeStyles, formatDate, formatDateTime } from "@/lib/utils";
 import AssessmentView from "./AssessmentView";
 import CodingProblemPage from "./CodingProblemPage";
 
@@ -523,8 +523,9 @@ const ModuleContentRenderer = ({ selectedItemData, getAssessmentData, sessionSta
         <div className="max-w-4xl mx-auto p-8">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-3xl font-heading font-bold">{item.title}</h1>
-            <Badge variant="outline" className={getStatusBadgeStyles('live')}>
-              Live Now
+            <Badge variant="outline" className={cn(getStatusBadgeStyles('live'), "flex items-center gap-1.5")}>
+              <span className="w-2 h-2 rounded-full bg-success animate-dot-pulse" />
+              <span className="animate-live-breathe">Live Now</span>
             </Badge>
           </div>
           <p className="text-muted-foreground mb-6">{item.description || "Join this live interactive session with your instructor and fellow students."}</p>
@@ -539,8 +540,8 @@ const ModuleContentRenderer = ({ selectedItemData, getAssessmentData, sessionSta
             </div>
           </div>
           <div className="text-center">
-            <Button 
-              className="mb-6"
+            <Button
+              className="mb-6 animate-glow-pulse"
               onClick={() => sessionStateHandlers.handleLiveClassJoin(item.id)}
             >
               Join Class
@@ -579,11 +580,11 @@ const ModuleContentRenderer = ({ selectedItemData, getAssessmentData, sessionSta
             Class completed
           </p>
           
-          <div className="border-t border-border pt-6">
+          <div className="border-t border-border pt-6 animate-fade-in">
             <h2 className="text-xl font-heading font-semibold mb-4">Recording available for the live class</h2>
-            <div className="bg-black rounded-lg aspect-video flex items-center justify-center">
+            <div className="group bg-black rounded-lg aspect-video flex items-center justify-center cursor-pointer">
               <div className="text-center text-white">
-                <Play className="w-16 h-16 mx-auto mb-4" />
+                <Play className="w-16 h-16 mx-auto mb-4 transition-transform duration-200 group-hover:scale-125" />
                 <p>Class Recording</p>
                 <p className="text-sm opacity-75">{item.duration || '45 mins'}</p>
               </div>
@@ -613,30 +614,38 @@ const ModuleContentRenderer = ({ selectedItemData, getAssessmentData, sessionSta
           </Badge>
         </div>
         <p className="text-muted-foreground mb-6">Duration: {item.duration || '20 mins'}</p>
-        <div className="bg-black rounded-lg aspect-video">
+        <div className="group relative bg-black rounded-lg aspect-video animate-fade-in">
           {videoId ? (
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1`}
-              title={item.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="rounded-lg"
-              onLoad={() => {
-                // Simulate video watch completion after 5 seconds for demo
-                setTimeout(() => {
-                  if (item.status !== 'completed') {
-                    handleVideoEnd();
-                  }
-                }, 5000);
-              }}
-            />
+            <>
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1`}
+                title={item.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="rounded-lg"
+                onLoad={() => {
+                  // Simulate video watch completion after 5 seconds for demo
+                  setTimeout(() => {
+                    if (item.status !== 'completed') {
+                      handleVideoEnd();
+                    }
+                  }, 5000);
+                }}
+              />
+              {/* Hover overlay — scales the play icon, pointer-events-none so clicks pass through to iframe */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none rounded-lg">
+                <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-125 scale-100">
+                  <Play className="w-7 h-7 text-white ml-1" />
+                </div>
+              </div>
+            </>
           ) : (
-            <div className="flex items-center justify-center h-full">
+            <div className="group flex items-center justify-center h-full cursor-pointer">
               <div className="text-center text-white">
-                <Play className="w-16 h-16 mx-auto mb-4" />
+                <Play className="w-16 h-16 mx-auto mb-4 transition-transform duration-200 group-hover:scale-125" />
                 <p>Video Content</p>
                 <p className="text-sm opacity-75">{item.duration || '20 mins'}</p>
               </div>

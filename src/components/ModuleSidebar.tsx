@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
+import { cn } from "@/lib/utils";
+import {
   ArrowLeft,
   ChevronDown,
-  ChevronRight,
   Check,
-  Video, 
-  BookOpen, 
-  FileText, 
-  Play, 
+  Video,
+  BookOpen,
+  FileText,
+  Play,
   Circle,
   User
 } from "lucide-react";
@@ -25,19 +25,22 @@ interface ModuleSidebarProps {
 }
 
 const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect }: ModuleSidebarProps) => {
-  const [expandedTopics, setExpandedTopics] = useState<string[]>([]);
+  // Start with all topics expanded
+  const [expandedTopics, setExpandedTopics] = useState<string[]>(() => module.topics.map(t => t.id));
 
-  // Auto-expand the topic that contains the selected item
+  // Auto-expand the topic that contains the selected item (without expandedTopics in deps to avoid loop)
   useEffect(() => {
     if (selectedItem) {
-      const topicWithSelectedItem = module.topics.find(topic => 
+      const topicWithSelectedItem = module.topics.find(topic =>
         topic.items.some(item => item.id === selectedItem)
       );
-      if (topicWithSelectedItem && !expandedTopics.includes(topicWithSelectedItem.id)) {
-        setExpandedTopics(prev => [...prev, topicWithSelectedItem.id]);
+      if (topicWithSelectedItem) {
+        setExpandedTopics(prev =>
+          prev.includes(topicWithSelectedItem.id) ? prev : [...prev, topicWithSelectedItem.id]
+        );
       }
     }
-  }, [selectedItem, module.topics, expandedTopics]);
+  }, [selectedItem, module.topics]);
 
   const getItemIcon = (type: string, status: string) => {
     const getIconComponent = () => {
@@ -124,9 +127,9 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
   return (
     <div className="w-80 bg-background border-r border-border shadow-4dp fixed h-full">
       <div className="p-6 border-b border-border">
-        <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:no-underline">
-          <Link to={`/course/${courseId}`}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
+        <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:translate-y-0 hover:shadow-none [&::after]:hidden">
+          <Link to={`/course/${courseId}`} className="group flex items-center">
+            <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-[3px]" />
             Back to Course
           </Link>
         </Button>
@@ -142,7 +145,7 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
             <div key={topic.id} className="space-y-2">
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left h-auto p-3 hover:bg-primary-light hover:text-charcoal"
+                className="w-full justify-start text-left h-auto p-3 hover:bg-primary-light hover:text-charcoal hover:translate-y-0 hover:!shadow-none"
                 onClick={() => toggleTopic(topic.id)}
               >
                 <div className="flex w-full justify-between items-start gap-2">
@@ -152,16 +155,18 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
                     </div>
                   </div>
                   <div className="flex-shrink-0 mt-0.5">
-                    {expandedTopics.includes(topic.id) ? (
-                      <ChevronDown className="w-4 h-4" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4" />
-                    )}
+                    <ChevronDown className={cn(
+                      "w-4 h-4 transition-transform duration-200",
+                      expandedTopics.includes(topic.id) ? "rotate-180" : "rotate-0"
+                    )} />
                   </div>
                 </div>
               </Button>
-              
-              {expandedTopics.includes(topic.id) && (
+
+              <div
+                className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+                style={{ maxHeight: expandedTopics.includes(topic.id) ? '1000px' : '0px' }}
+              >
                 <div className="space-y-1 pl-0">
                   {topic.items.map((item: any) => {
                     const isSecondTopicLiveClass = topic.id === module.topics[1]?.id && item.type === 'live-class';
@@ -175,11 +180,12 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
                         key={item.id}
                         variant="ghost"
                         size="sm"
-                        className={`w-full justify-start text-left h-auto p-3 text-sm break-words leading-relaxed whitespace-normal ${
-                          selectedItem === item.id 
-                            ? "bg-primary-light border-l-4 border-primary text-charcoal" 
-                            : "hover:bg-primary-light hover:text-charcoal"
-                        }`}
+                        className={cn(
+                          "w-full justify-start text-left h-auto p-3 text-sm break-words leading-relaxed whitespace-normal hover:translate-y-0 hover:!shadow-none",
+                          selectedItem === item.id
+                            ? "bg-primary-light border-l-4 border-primary text-charcoal hover:bg-primary-light"
+                            : "hover:bg-grey-light hover:text-charcoal"
+                        )}
                         onClick={() => onItemSelect(item.id)}
                       >
                         <div className="flex items-start gap-3 w-full">
@@ -212,7 +218,7 @@ const ModuleSidebar = ({ courseId, moduleId, module, selectedItem, onItemSelect 
                     );
                   })}
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Module } from "@/lib/mockData";
+import AnimatedProgressBar from "@/components/AnimatedProgressBar";
 
 interface ModuleCardProps {
   module: Module;
@@ -77,7 +78,7 @@ const ModuleCard = ({
                 </Link>
               </Button>
             ) : (
-              <Button variant="link" className="px-6 text-primary dark:text-secondary" asChild>
+              <Button variant="link" className="text-primary dark:text-secondary" asChild>
                 <Link to={`/course/${courseId}/module/${module.id}`}>
                   {getModuleCTA(module.id, moduleProgress)}
                 </Link>
@@ -89,22 +90,7 @@ const ModuleCard = ({
         {/* Module Progress */}
         {!isLocked && (
           <div className="mb-4 lg:mb-0">
-            <div className="relative bg-primary-light rounded-full h-2 w-full">
-              <div 
-                className="bg-primary h-2 rounded-full transition-all duration-300 relative"
-                style={{ width: `${moduleProgress}%` }}
-              >
-                <div 
-                  className="absolute top-1/2 transform -translate-y-1/2 progress-label-bg progress-label px-2 py-0.5 rounded shadow-sm border text-xs font-medium whitespace-nowrap"
-                  style={{ 
-                    right: moduleProgress === 100 ? '0' : moduleProgress === 0 ? 'auto' : '-12px',
-                    left: moduleProgress === 0 ? '0' : 'auto'
-                  }}
-                >
-                  {moduleProgress}%
-                </div>
-              </div>
-            </div>
+            <AnimatedProgressBar progress={moduleProgress} />
           </div>
         )}
 

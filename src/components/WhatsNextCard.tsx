@@ -29,7 +29,6 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
   const formatDateRange = () => {
     const today = new Date();
     const seventhDay = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    
     return `From ${formatDate(today).split(' ').slice(0, 2).join(' ')} to ${formatDate(seventhDay).split(' ').slice(0, 2).join(' ')}`;
   };
 
@@ -65,17 +64,17 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
   const getTimeRemaining = (dateTime: Date) => {
     const now = new Date();
     const timeDiff = dateTime.getTime() - now.getTime();
-    
+
     if (timeDiff <= 0) return "Time passed";
-    
+
     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    
+
     if (days > 0) return `Starts in ${days} day${days > 1 ? 's' : ''}`;
     if (hours > 0) return `Starts in ${hours} hour${hours > 1 ? 's' : ''}`;
     if (minutes > 0) return `Starts in ${minutes} minute${minutes > 1 ? 's' : ''}`;
-    
+
     return "Starting soon";
   };
 
@@ -89,19 +88,27 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
       </CardHeader>
       <CardContent className="pt-0">
         {upcomingItems.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {displayedItems.map((item, index) => (
               <div key={item.id}>
-                <div className="flex items-start gap-4">
+                {/* Row with hover green tint — no extra margin on hover */}
+                <div className="flex items-start gap-4 rounded-md py-1">
                   <div className="flex-shrink-0 mt-1">
                     {getItemIconWithBackground(item.type)}
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-start justify-between gap-4 mb-2">
+                    {/* Title with pulsing dot before it on first item */}
+                    <div className="flex items-center gap-1.5 mb-2">
+                      {index === 0 && (
+                        <span
+                          className="w-[7px] h-[7px] rounded-full flex-shrink-0 animate-pulse"
+                          style={{ backgroundColor: '#D32F2F' }}
+                        />
+                      )}
                       <h4 className="font-bold text-base">{item.title}</h4>
                     </div>
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-sm">
+                      <p className="text-sm text-muted-foreground">
                         {item.type === 'class' && `Scheduled on ${formatDateTime(item.dateTime)}`}
                         {item.type === 'assessment' && `Starts on ${formatDateTime(item.dateTime)}`}
                         {item.type === 'assignment' && `Due on ${formatDateTime(item.dateTime)}`}
@@ -113,7 +120,7 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
                         size="sm"
                         variant="link"
                         disabled={!item.canStart}
-                        className="text-primary dark:text-secondary p-0 h-auto font-normal"
+                        className="text-primary dark:text-secondary font-normal"
                       >
                         {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
                       </Button>
@@ -121,15 +128,15 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
                   </div>
                 </div>
                 {index < displayedItems.length - 1 && (
-                  <div className="border-t border-border mt-4"></div>
+                  <div className="h-px bg-border w-full mt-3" />
                 )}
               </div>
             ))}
             {hasMoreItems && (
-              <div className="mt-4 pt-4 border-t border-border">
+              <div className="mt-4 pt-4 border-t border-border flex justify-center">
                 <Button
                   variant="link"
-                  className="w-full text-primary dark:text-secondary p-0 h-auto"
+                  className="text-primary dark:text-secondary"
                   onClick={() => setIsViewAllModalOpen(true)}
                 >
                   View All Upcoming Items ({upcomingItems.length})
@@ -144,7 +151,7 @@ const WhatsNextCard = ({ upcomingItems }: WhatsNextCardProps) => {
           </div>
         )}
       </CardContent>
-      
+
       {/* View All Modal */}
       <ViewAllUpcomingModal
         isOpen={isViewAllModalOpen}

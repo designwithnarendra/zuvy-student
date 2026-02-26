@@ -432,6 +432,16 @@ export const mockCourses: Course[] = [
                 description: "Introduction to DOM concepts and element selection methods"
               },
               {
+                id: "2-1-live-now",
+                type: 'live-class',
+                title: "Event Listeners and Bubbling",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago — Live Now
+                meetLink: "https://meet.google.com/xyz-live-now",
+                description: "Understand JavaScript event listeners, propagation, and bubbling in the DOM"
+              },
+              {
                 id: "2-1-2",
                 type: 'live-class',
                 title: "Advanced DOM Manipulation Techniques",

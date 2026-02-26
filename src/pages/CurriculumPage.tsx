@@ -439,7 +439,7 @@ const CurriculumPage = () => {
         {!isMobile && (
           <div className="w-80 bg-card border-r border-border shadow-4dp fixed h-full">
             <div className="p-6 border-b border-border">
-              <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:no-underline">
+              <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:translate-y-0 hover:shadow-none [&::after]:hidden">
                 <Link to={`/course/${courseId}`}>
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Course

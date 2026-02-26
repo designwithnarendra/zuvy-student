@@ -1,16 +1,18 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Play, RotateCcw, CheckCircle, Video, FileText, BookOpen, X, Plus, ChevronRight, Sparkles } from "lucide-react";
+import { Play, RotateCcw, CheckCircle, Video, FileText, BookOpen, X, Plus, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { mockStudent, mockCourses, Course } from "@/lib/mockData";
 import Header from "@/components/Header";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useOnboardingStatus } from "@/hooks/use-onboarding";
+import { cn } from "@/lib/utils";
+import AnimatedProgressBar from "@/components/AnimatedProgressBar";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -18,10 +20,50 @@ const StudentDashboard = () => {
   const [dismissedBanner, setDismissedBanner] = useState(false);
   const [filter, setFilter] = useState<'enrolled' | 'completed'>('enrolled');
   const [simulationProgress, setSimulationProgress] = useState<string>('65');
+  const [showAllUpcomingMap, setShowAllUpcomingMap] = useState<Record<string, boolean>>({});
 
-  // Get simulated progress
+  // Get simulated progress (must be declared before the animation effect that depends on it)
   const displayProgress = parseInt(simulationProgress);
-  
+
+  // Animated profile progress — counts from 0 to displayProgress on load and on change
+  const [animatedProfile, setAnimatedProfile] = useState(0);
+  const rafProfileRef = useRef<number>(0);
+  const startProfileRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setAnimatedProfile(displayProgress);
+      return;
+    }
+    startProfileRef.current = 0;
+    cancelAnimationFrame(rafProfileRef.current);
+    const easeInOut = (t: number) => -(Math.cos(Math.PI * t) - 1) / 2;
+    const tick = (timestamp: number) => {
+      if (!startProfileRef.current) startProfileRef.current = timestamp;
+      const elapsed = timestamp - startProfileRef.current;
+      const t = Math.min(elapsed / 1200, 1);
+      setAnimatedProfile(easeInOut(t) * displayProgress);
+      if (t < 1) rafProfileRef.current = requestAnimationFrame(tick);
+    };
+    rafProfileRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafProfileRef.current);
+  }, [displayProgress]);
+
+  // Zoe banner float animation — only animate when banner is in view
+  const zoeBannerRef = useRef<HTMLDivElement>(null);
+  const [isZoeInView, setIsZoeInView] = useState(false);
+
+  useEffect(() => {
+    const el = zoeBannerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsZoeInView(entry.isIntersecting),
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Calculate profile status based on progress
   const getProfileStatus = (prog: number) => {
     if (prog >= 100) return { label: 'Complete', color: 'text-success' };
@@ -63,38 +105,6 @@ const StudentDashboard = () => {
   const nextAction = getNextAction(displayProgress);
 
   const filteredCourses = mockCourses.filter(course => course.status === filter);
-
-  // Drag to scroll functionality
-  const handleDragScroll = (e: React.MouseEvent<HTMLDivElement>) => {
-    const ele = e.currentTarget;
-    let pos = { left: 0, x: 0 };
-    
-    const mouseDownHandler = (e: MouseEvent) => {
-      ele.style.cursor = 'grabbing';
-      ele.style.userSelect = 'none';
-      pos = {
-        left: ele.scrollLeft,
-        x: e.clientX,
-      };
-      
-      document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseup', mouseUpHandler);
-    };
-    
-    const mouseMoveHandler = (e: MouseEvent) => {
-      const dx = e.clientX - pos.x;
-      ele.scrollLeft = pos.left - dx;
-    };
-    
-    const mouseUpHandler = () => {
-      ele.style.cursor = 'grab';
-      ele.style.removeProperty('user-select');
-      document.removeEventListener('mousemove', mouseMoveHandler);
-      document.removeEventListener('mouseup', mouseUpHandler);
-    };
-    
-    ele.addEventListener('mousedown', mouseDownHandler);
-  };
 
   const getActionButton = (course: Course) => {
     if (course.status === 'completed') {
@@ -203,11 +213,16 @@ const StudentDashboard = () => {
             </div>
 
             {/* Zoe AI Assistant Banner */}
-            <Card className="mb-8 bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-900">
+            <Card ref={zoeBannerRef} className="mb-8 bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-900">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center text-3xl flex-shrink-0">
+                    <div
+                      className={cn(
+                        "w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center text-3xl flex-shrink-0",
+                        isZoeInView && "animate-float-zoe hover:[animation-play-state:paused]"
+                      )}
+                    >
                       🤖
                     </div>
                     <div>
@@ -285,22 +300,7 @@ const StudentDashboard = () => {
 
                         {/* Progress Bar */}
                         <div className="mb-4 md:mb-0">
-                          <div className="relative bg-primary-light rounded-full h-2 w-full">
-                            <div
-                              className="bg-primary h-2 rounded-full transition-all duration-300 relative"
-                              style={{ width: `${course.progress}%` }}
-                            >
-                              <div
-                                className="absolute top-1/2 transform -translate-y-1/2 progress-label-bg progress-label px-2 py-0.5 rounded shadow-sm border text-xs font-medium whitespace-nowrap"
-                                style={{
-                                  right: course.progress === 100 ? '0' : course.progress === 0 ? 'auto' : '-12px',
-                                  left: course.progress === 0 ? '0' : 'auto'
-                                }}
-                              >
-                                {course.progress}%
-                              </div>
-                            </div>
-                          </div>
+                          <AnimatedProgressBar progress={course.progress} />
                         </div>
                       </div>
 
@@ -318,57 +318,120 @@ const StudentDashboard = () => {
                 </div>
 
                 {/* Chapter Cards - Only for enrolled courses */}
-                {course.status === 'enrolled' && course.upcomingItems.length > 0 && (
-                  <>
-                    {/* Separator */}
-                    <div className="border-t border-border my-6"></div>
+                {course.status === 'enrolled' && (() => {
+                  const oneWeekFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+                  const weekItems = course.upcomingItems.filter(item => new Date(item.dateTime) <= oneWeekFromNow);
+                  if (weekItems.length === 0) return null;
 
-                    {/* Upcoming Items — horizontal scroll */}
-                    <div
-                      className="overflow-x-auto scrollbar-hide -mx-6 px-6 cursor-grab active:cursor-grabbing"
-                      onMouseEnter={handleDragScroll}
+                  const showAll = showAllUpcomingMap[course.id] ?? false;
+
+                  const itemCell = (item: any) => (
+                    <button
+                      onClick={() => navigate(`/course/${course.id}`)}
+                      className="w-full flex flex-col gap-2 py-4 px-3 text-left hover:bg-muted/50 rounded-lg transition-colors"
                     >
-                      <div className="flex items-stretch pb-1">
-                        {course.upcomingItems.slice(0, 5).map((item, index) => (
-                          <div key={item.id} className="flex items-stretch">
-                            {index > 0 && <div className="border-l border-border mx-4 self-stretch" />}
-                            <div className="flex flex-col gap-1 min-w-[180px] py-1">
-                              {/* Row 1: icon + title + badge */}
-                              <div className="flex items-center gap-3">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                  item.type === 'class' ? 'bg-secondary/20'
-                                  : item.type === 'assessment' ? 'bg-warning/20'
-                                  : 'bg-info/20'
-                                }`}>
-                                  {item.type === 'class'
-                                    ? <Video className="w-4 h-4 text-secondary dark:text-secondary-dark" />
-                                    : <FileText className={`w-4 h-4 ${item.type === 'assessment' ? 'text-warning dark:text-warning-dark' : 'text-info dark:text-info-dark'}`} />
-                                  }
-                                </div>
-                                <span className="text-sm font-medium whitespace-nowrap">
-                                  {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
-                                </span>
-                                <Badge variant="outline" className={`ml-6 text-xs px-2 py-0.5 whitespace-nowrap flex-shrink-0 ${
-                                  item.type === 'class' ? 'bg-secondary-light text-secondary dark:text-foreground border-secondary'
-                                  : item.type === 'assessment' ? 'bg-warning-light text-warning dark:text-foreground border-warning'
-                                  : 'bg-info-light text-info dark:text-foreground border-info'
-                                }`}>
-                                  {item.type === 'class' ? 'Live Class' : item.type === 'assessment' ? 'Assessment' : 'Assignment'}
-                                </Badge>
-                              </div>
-                              {/* Row 2: date only (aligned under title) */}
-                              <div className="pl-11">
-                                <span className="text-xs text-muted-foreground whitespace-nowrap">
-                                  {item.type === 'assignment' ? 'Due' : 'Starts'} in {formatUpcomingItem(item)}
-                                </span>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                          item.type === 'class' ? 'bg-secondary/20'
+                          : item.type === 'assessment' ? 'bg-warning/20'
+                          : 'bg-info/20'
+                        }`}>
+                          {item.type === 'class'
+                            ? <Video className="w-4 h-4 text-secondary dark:text-secondary-dark" />
+                            : <FileText className={`w-4 h-4 ${item.type === 'assessment' ? 'text-warning' : 'text-info'}`} />
+                          }
+                        </div>
+                        <span className="text-sm font-medium line-clamp-1 flex-1">
+                          {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
+                        </span>
+                        <Badge variant="outline" className={`text-xs px-2 py-0.5 whitespace-nowrap flex-shrink-0 ${
+                          item.type === 'class' ? 'bg-secondary-light text-secondary dark:text-foreground border-secondary'
+                          : item.type === 'assessment' ? 'bg-warning-light text-warning dark:text-foreground border-warning'
+                          : 'bg-info-light text-info dark:text-foreground border-info'
+                        }`}>
+                          {item.type === 'class' ? 'Live Class' : item.type === 'assessment' ? 'Assessment' : 'Assignment'}
+                        </Badge>
+                      </div>
+                      <div className="pl-11">
+                        <span className="text-xs text-muted-foreground">
+                          {item.type === 'assignment' ? 'Due' : 'Starts'} in {formatUpcomingItem(item)}
+                        </span>
+                      </div>
+                    </button>
+                  );
+
+                  // Always render all rows; animate extras in/out
+                  const allRows: any[] = [];
+                  for (let i = 0; i < weekItems.length; i += 2) allRows.push(weekItems.slice(i, i + 2));
+                  const firstRow = allRows[0];
+                  const extraRows = allRows.slice(1);
+
+                  const renderRow = (row: any[], rowIndex: number) => (
+                    <div key={rowIndex} className="flex items-stretch">
+                      <div className="w-[calc(50%-8px)]">{itemCell(row[0])}</div>
+                      {row[1] ? (
+                        <>
+                          <div className="w-px bg-border flex-shrink-0 self-stretch mx-2 my-3" />
+                          <div className="w-[calc(50%-8px)]">{itemCell(row[1])}</div>
+                        </>
+                      ) : (
+                        <div className="w-1/2" />
+                      )}
+                    </div>
+                  );
+
+                  return (
+                    <>
+                      <div className="border-t border-border my-6" />
+
+                      {/* Mobile: flat list — first 2 always visible, extras animated */}
+                      <div className="sm:hidden">
+                        {weekItems.slice(0, 2).map((item: any) => itemCell(item))}
+                        {weekItems.length > 2 && (
+                          <div
+                            className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            style={{ gridTemplateRows: showAll ? '1fr' : '0fr' }}
+                          >
+                            <div className="overflow-hidden min-h-0">
+                              <div style={{ opacity: showAll ? 1 : 0, transition: 'opacity 450ms ease' }}>
+                                {weekItems.slice(2).map((item: any) => itemCell(item))}
                               </div>
                             </div>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
-                  </>
-                )}
+
+                      {/* Desktop: 2-column grid — first row always visible, extra rows animated */}
+                      <div className="hidden sm:block">
+                        {firstRow && renderRow(firstRow, 0)}
+                        {extraRows.length > 0 && (
+                          <div
+                            className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            style={{ gridTemplateRows: showAll ? '1fr' : '0fr' }}
+                          >
+                            <div className="overflow-hidden min-h-0">
+                              <div style={{ opacity: showAll ? 1 : 0, transition: 'opacity 450ms ease' }}>
+                                {extraRows.map((row, i) => renderRow(row, i + 1))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {weekItems.length > 2 && (
+                        <div className="mt-3 flex justify-center">
+                          <Button
+                            variant="link"
+                            className="text-primary"
+                            onClick={() => setShowAllUpcomingMap(prev => ({ ...prev, [course.id]: !prev[course.id] }))}
+                          >
+                            {showAll ? 'Show Less' : `Show All Upcoming Items (${weekItems.length})`}
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
               </CardContent>
             </Card>
               ))}
@@ -400,7 +463,7 @@ const StudentDashboard = () => {
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-xl font-heading font-bold">Profile Strength</h3>
                   <span className="text-xl font-semibold text-primary bg-primary-light dark:bg-primary dark:text-primary-foreground px-3 py-1 rounded-lg">
-                    {Math.round(displayProgress)}%
+                    {Math.round(animatedProfile)}%
                   </span>
                 </div>
 
@@ -425,8 +488,8 @@ const StudentDashboard = () => {
                         strokeWidth="12"
                         fill="none"
                         strokeDasharray={`${2 * Math.PI * 56}`}
-                        strokeDashoffset={`${2 * Math.PI * 56 * (1 - displayProgress / 100)}`}
-                        className="text-primary transition-all duration-500"
+                        strokeDashoffset={`${2 * Math.PI * 56 * (1 - animatedProfile / 100)}`}
+                        className="text-primary"
                         strokeLinecap="round"
                       />
                     </svg>
@@ -449,10 +512,10 @@ const StudentDashboard = () => {
                 {/* Action Card */}
                 <button
                   onClick={() => navigate(`/profile?tab=${nextAction.path}`)}
-                  className="w-full flex items-center gap-3 p-4 rounded-xl bg-primary-light dark:bg-primary dark:bg-opacity-20 hover:bg-primary-light/80 dark:hover:bg-primary/30 transition-all group border border-transparent hover:border-primary dark:hover:border-primary"
+                  className="w-full flex items-center gap-3 p-4 rounded-xl bg-primary-light dark:bg-primary dark:bg-opacity-20 hover:bg-primary-light/80 dark:hover:bg-primary/30 transition-all duration-200 group border border-transparent hover:border-primary dark:hover:border-primary hover:-translate-y-0.5 hover:scale-[1.01]"
                 >
                   <div className="w-12 h-12 rounded-full bg-card dark:bg-primary flex items-center justify-center shadow-sm flex-shrink-0">
-                    <Plus className="w-5 h-5 text-primary dark:text-primary-foreground" />
+                    <Plus className="w-5 h-5 text-primary dark:text-primary-foreground group-hover:rotate-90 transition-transform duration-200" />
                   </div>
                   <div className="text-left flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">{nextAction.text}</p>

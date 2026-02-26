@@ -62,7 +62,7 @@ const CourseSyllabusPage = () => {
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">
         {/* Back Navigation */}
         <div className="mb-6">
-          <Button variant="link" className="p-0 h-auto text-primary hover:text-primary hover:underline" asChild>
+          <Button variant="link" className="p-0 h-auto text-primary hover:text-primary hover:translate-y-0 hover:shadow-none [&::after]:hidden" asChild>
             <Link to={`/course/${courseId}`} className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Course Dashboard</span>
