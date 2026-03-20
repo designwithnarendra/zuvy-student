@@ -298,6 +298,24 @@ const ModuleContentPage = () => {
     if (course && moduleId) {
       const module = course.modules.find(m => m.id === moduleId);
       if (module && module.topics.length > 0) {
+        const deepLinkedItemId = new URLSearchParams(location.search).get("itemId");
+        if (deepLinkedItemId) {
+          const itemExists = module.topics.some(topic =>
+            topic.items.some(item => item.id === deepLinkedItemId)
+          );
+
+          if (itemExists) {
+            setSelectedItem(deepLinkedItemId);
+            const topic = module.topics.find((candidateTopic) =>
+              candidateTopic.items.some((item) => item.id === deepLinkedItemId)
+            );
+            if (topic) {
+              saveNavigationState(deepLinkedItemId, topic.id);
+            }
+            return;
+          }
+        }
+
         // Try to restore navigation state first
         const savedState = restoreNavigationState();
         if (savedState && savedState.lastSelectedItemId) {
@@ -317,7 +335,7 @@ const ModuleContentPage = () => {
         }
       }
     }
-  }, [course, moduleId]);
+  }, [course, location.search, moduleId]);
 
   if (!course) {
     return (

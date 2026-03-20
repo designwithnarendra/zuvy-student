@@ -141,7 +141,7 @@ const ProjectPage = () => {
           <div className="flex items-center">
             <Button 
               variant="ghost" 
-              className="p-0 h-auto text-primary hover:text-primary hover:underline"
+              className="p-0 h-auto text-primary hover:text-primary hover:translate-y-0 hover:shadow-none [&::after]:hidden"
               onClick={() => navigate(`/course/${courseId}`)}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />

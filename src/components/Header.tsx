@@ -4,6 +4,7 @@ import { Moon, Sun, LogOut, User } from "lucide-react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useTheme } from "@/lib/ThemeProvider";
 import { mockCourses, mockStudent } from "@/lib/mockData";
+import { useNotifications } from "@/hooks/use-notifications";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +13,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import NotificationMenu from "@/components/NotificationMenu";
 
 const Header = () => {
   const { theme, toggleTheme, isThemeLocked } = useTheme();
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const navigate = useNavigate();
   const location = useLocation();
   const { courseId } = useParams();
@@ -51,6 +54,13 @@ const Header = () => {
 
   // Check if we're on a course-related page
   const isOnCoursePage = location.pathname.includes('/course/');
+
+  const handleNotificationAction = (notification: (typeof notifications)[number]) => {
+    markAsRead(notification.id);
+    if (notification.actionLink) {
+      navigate(notification.actionLink);
+    }
+  };
 
   return (
     <header className="w-full h-16 px-6 flex items-center justify-between bg-background/80 backdrop-blur-md border-b border-border/50 shadow-4dp sticky top-0 z-50">
@@ -92,6 +102,13 @@ const Header = () => {
 
       {/* Right - Theme Switch and Avatar */}
       <div className="flex items-center gap-4">
+        <NotificationMenu
+          notifications={notifications}
+          unreadCount={unreadCount}
+          onAction={handleNotificationAction}
+          onMarkAllAsRead={markAllAsRead}
+        />
+
         <Button
           variant="ghost"
           size="sm"

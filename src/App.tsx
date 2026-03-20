@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/lib/ThemeProvider";
+import { NotificationProvider } from "@/hooks/use-notifications";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -17,35 +18,39 @@ import SolutionViewerPage from "./pages/SolutionViewerPage";
 import CodingProblemPage from "./pages/CodingProblemPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import ProfilePage from "./pages/ProfilePage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Index />} />
-            <Route path="/onboarding" element={<OnboardingPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/dashboard" element={<StudentDashboard />} />
-            <Route path="/course/:courseId" element={<CourseDashboard />} />
-            <Route path="/course/:courseId/syllabus" element={<CourseSyllabusPage />} />
-            <Route path="/course/:courseId/module/:moduleId" element={<ModuleContentPage />} />
-            <Route path="/course/:courseId/project/:projectId" element={<ProjectPage />} />
-            <Route path="/assessment/:courseId/:moduleId/:assessmentId" element={<AssessmentPage />} />
-            <Route path="/assessment/:assessmentId" element={<AssessmentPage />} />
-            <Route path="/solution-viewer/:itemId" element={<SolutionViewerPage />} />
-            <Route path="/coding-problem/:itemId" element={<CodingProblemPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <NotificationProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Index />} />
+              <Route path="/onboarding" element={<OnboardingPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/dashboard" element={<StudentDashboard />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
+              <Route path="/course/:courseId" element={<CourseDashboard />} />
+              <Route path="/course/:courseId/syllabus" element={<CourseSyllabusPage />} />
+              <Route path="/course/:courseId/module/:moduleId" element={<ModuleContentPage />} />
+              <Route path="/course/:courseId/project/:projectId" element={<ProjectPage />} />
+              <Route path="/assessment/:courseId/:moduleId/:assessmentId" element={<AssessmentPage />} />
+              <Route path="/assessment/:assessmentId" element={<AssessmentPage />} />
+              <Route path="/solution-viewer/:itemId" element={<SolutionViewerPage />} />
+              <Route path="/coding-problem/:itemId" element={<CodingProblemPage />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </NotificationProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

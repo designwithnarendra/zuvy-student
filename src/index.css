@@ -445,3 +445,16 @@
   animation: none;
   box-shadow: none;
 }
+
+@keyframes bell-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(6deg); }
+}
+
+.animate-bell-wiggle {
+  animation: bell-wiggle 900ms ease-in-out 1;
+  transform-origin: top center;
+}
